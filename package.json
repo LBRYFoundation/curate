@@ -1,0 +1,33 @@
+{
+  "name": "lbry-curate",
+  "version": "0.0.1",
+  "description": "Support the LBRY Community through Discord!",
+  "main": "src/bot.js",
+  "scripts": {
+    "start": "node src/bot.js",
+    "eslint": "eslint ./src",
+    "eslint:fix": "eslint ./src --fix"
+  },
+  "dependencies": {
+    "abort-controller": "^3.0.0",
+    "cat-loggr": "^1.1.0",
+    "config": "^3.3.1",
+    "eris": "^0.13.3",
+    "eventemitter3": "^4.0.4",
+    "fuzzy": "^0.1.3",
+    "moment": "^2.27.0",
+    "node-fetch": "^2.3.0",
+    "redis": "^3.0.2",
+    "require-reload": "^0.2.2",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trello-talk/TrelloBot.git"
+  },
+  "author": "LBRY Curate Dev Team <curate@lbry.org>",
+  "license": "MIT"
+}
