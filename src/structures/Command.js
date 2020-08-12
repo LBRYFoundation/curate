@@ -79,6 +79,20 @@ class Command {
   exec(Message, opts) { }
 
   /**
+   * @private
+   */
+  async handleResponse(message, response) {
+    if (response.status !== 200) {
+      const error = response.status === 500 ?
+        { message: 'Internal server error' } : (await response.json()).error;
+      console.error(`SDK error in ${this.name}:${message.author.id}`, response, error);
+      await message.channel.createMessage(`LBRY-SDK returned ${response.status}.\n${error.message}`);
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * The options for the command
    * @type {Object}
    */

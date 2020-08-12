@@ -10,10 +10,7 @@ module.exports = class AdminBalance extends Command {
 
   async exec(message) {
     const response = await this.client.lbry.walletBalance();
-    if (response.status !== 200) {
-      console.error('SDK error in adminbalance', response, await response.text());
-      return message.channel.createMessage(`LBRY-SDK returned ${response.status}, check console.`);
-    }
+    if (this.handleResponse(message, response)) return;
     const wallet = await response.json();
     return message.channel.createMessage({ embed: {
       description: `**Available:** ${wallet.result.available} LBC\n\n` +

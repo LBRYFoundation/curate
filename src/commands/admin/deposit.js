@@ -10,10 +10,7 @@ module.exports = class Deposit extends Command {
 
   async exec(message) {
     const response = await this.client.lbry.listAddresses();
-    if (response.status !== 200) {
-      console.error('SDK error in deposit', response, await response.text());
-      return message.channel.createMessage(`LBRY-SDK returned ${response.status}, check console.`);
-    }
+    if (this.handleResponse(message, response)) return;
     const address = await response.json();
     return message.channel.createMessage(`Address: ${address.result.items[0].address}`);
   }
