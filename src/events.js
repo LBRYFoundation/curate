@@ -31,7 +31,7 @@ module.exports = class Events {
         args
       });
     } catch (e) {
-      if (this.client.config.debug) {
+      if (config.debug) {
         console.error(`The '${command.name}' command failed.`);
         console.log(e);
       }
