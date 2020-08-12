@@ -23,7 +23,7 @@ module.exports = class SQLiteDB {
         unique: true,
       }
     }, { sequelize: this.sequelize, modelName: 'user' });
-
+    UserPair.sync();
     this.model = UserPair;
   }
 
