@@ -1,5 +1,6 @@
 node_modules
 config/default.js
 config/production.js
+config/curate.sqlite
 package-lock.json
 .idea/

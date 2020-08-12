@@ -3,6 +3,7 @@ const Database = require('./database');
 const EventHandler = require('./events');
 const CommandLoader = require('./commandloader');
 const MessageAwaiter = require('./messageawaiter');
+const SQLiteDB = require('./sqlitedb');
 const path = require('path');
 const CatLoggr = require('cat-loggr');
 const config = require('config');
@@ -80,6 +81,7 @@ class CurateBot extends Eris.Client {
     // Redis
     this.db = new Database(this);
     await this.db.connect(config.redis);
+    this.sqlite = new SQLiteDB(this);
 
     // Discord
     await this.connect();
