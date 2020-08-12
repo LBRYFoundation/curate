@@ -26,9 +26,10 @@ module.exports = class Withdraw extends Command {
     // Send to wallet
     const response = await this.client.lbry.sendToWallet({ amount, to: args[1] });
     if (await this.handleResponse(message, response)) return;
-    const txid = (await response.json()).result.inputs[0].txid;
+    const transaction = await response.json();
+    console.debug('withdrew from master wallet', transaction);
     return message.channel.createMessage(`Sent ${parseFloat(amount)} LBC to ${args[1]}.\n` +
-      `https://explorer.lbry.com/tx/${txid}`);
+      `https://explorer.lbry.com/tx/${transaction.result.inputs[0].txid}`);
   }
 
   get metadata() { return {
