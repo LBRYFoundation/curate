@@ -25,11 +25,15 @@ module.exports = class Withdraw extends Command {
         'There is not enough available LBC in the wallet to send that amount!');
 
     // Send to wallet
+    if (!await this.client.messageAwaiter.confirm(message, {
+      header: `Are you sure you want to send ${amount} to \`${args[1]}\`? ` +
+        `*(remaining: ${availableBalance - parseFloat(amount)})*`
+    })) return;
     const response = await this.client.lbry.sendToWallet({ amount, to: args[1] });
     const transaction = await response.json();
     if (await this.handleResponse(message, response, transaction)) return;
     console.debug('withdrew from master wallet', transaction);
-    return message.channel.createMessage(`Sent ${parseFloat(amount)} LBC to ${args[1]}.\n` +
+    return message.channel.createMessage(`Sent ${amount} LBC to ${args[1]}.\n` +
       `https://explorer.lbry.com/tx/${transaction.result.txid}`);
   }
 
