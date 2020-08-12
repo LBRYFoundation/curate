@@ -154,7 +154,7 @@ class LBRY {
   }
   // #endregion
 
-  // #region Wallet & Address Methods
+  // #region Wallet, Address, Claim Methods
   /**
    * Return the balance of a wallet
    */
@@ -179,6 +179,20 @@ class LBRY {
    */
   static listAddresses() {
     return this._sdkRequest('address_list', { page_size: 1 });
+  }
+
+  /**
+   * Search for stream and channel claims on the blockchain.
+   * @param {object} options
+   * @param {string} options.name The claim name to search
+   * @param {string} options.text The text to search
+   * @param {string} options.claimID The claim ID to search
+   * @param {string} options.channel Signed channel name (e.g: @Coolguy3289)
+   * @param {string} options.channelType The type of claim
+   */
+  static searchClaim({ name, text, claimID, channel, channelType }) {
+    return this._sdkRequest('claim_search', {
+      name, text, claim_id: claimID, channel, channel_type: channelType });
   }
   // #endregion
 }
