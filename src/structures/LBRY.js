@@ -67,7 +67,7 @@ class LBRY {
       payload.params = params;
 
     return this._request({
-      url: '',
+      url: '/',
       method: 'post',
       bodyType: 'json',
       body: payload
