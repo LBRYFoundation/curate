@@ -6,6 +6,7 @@ const MessageAwaiter = require('./messageawaiter');
 const path = require('path');
 const CatLoggr = require('cat-loggr');
 const config = require('config');
+const LBRY = require('./structures/LBRY');
 
 class CurateBot extends Eris.Client {
   constructor({ packagePath, mainDir } = {}) {
@@ -96,6 +97,7 @@ class CurateBot extends Eris.Client {
     // Events
     this.messageAwaiter = new MessageAwaiter(this);
     this.eventHandler = new EventHandler(this);
+    this.lbry = new LBRY(this);
   }
 
   /**
