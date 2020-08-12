@@ -18,15 +18,14 @@
     "moment": "^2.27.0",
     "node-fetch": "^2.3.0",
     "redis": "^3.0.2",
-    "require-reload": "^0.2.2",
-    "winston": "^3.3.3"
+    "require-reload": "^0.2.2"
   },
   "devDependencies": {
     "eslint": "^7.6.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trello-talk/TrelloBot.git"
+    "url": "git+https://github.com/LBRYFoundation/curate.git"
   },
   "author": "LBRY Curate Dev Team <curate@lbry.org>",
   "license": "MIT"
