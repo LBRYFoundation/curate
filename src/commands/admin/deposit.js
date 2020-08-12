@@ -10,8 +10,8 @@ module.exports = class Deposit extends Command {
 
   async exec(message) {
     const response = await this.client.lbry.listAddresses();
-    if (await this.handleResponse(message, response)) return;
     const address = await response.json();
+    if (await this.handleResponse(message, response, address)) return;
     return message.channel.createMessage(`Address: ${address.result.items[0].address}`);
   }
 

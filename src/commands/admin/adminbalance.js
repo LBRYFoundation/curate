@@ -10,8 +10,8 @@ module.exports = class AdminBalance extends Command {
 
   async exec(message) {
     const response = await this.client.lbry.walletBalance();
-    if (await this.handleResponse(message, response)) return;
     const wallet = await response.json();
+    if (await this.handleResponse(message, response, wallet)) return;
     return message.channel.createMessage({ embed: {
       description: `**Available:** ${wallet.result.available} LBC\n\n` +
         `Reserved in Supports: ${wallet.result.reserved_subtotals.supports} LBC\n` +
