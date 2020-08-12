@@ -16,7 +16,7 @@ module.exports = class Withdraw extends Command {
 
     // Check if the balance is more than requested
     const balance = await this.client.lbry.walletBalance();
-    if (this.handleResponse(message, balance)) return;
+    if (await this.handleResponse(message, balance)) return;
     const availableBalance = parseFloat((await balance.json()).result.available);
     if (parseFloat(amount) > availableBalance)
       return message.channel.createMessage(
@@ -24,7 +24,7 @@ module.exports = class Withdraw extends Command {
 
     // Send to wallet
     const response = await this.client.lbry.sendToWallet({ amount, to: args[1] });
-    if (this.handleResponse(message, response)) return;
+    if (await this.handleResponse(message, response)) return;
     const txid = (await response.json()).result.inputs[0].txid;
     return message.channel.createMessage(`Sent ${parseFloat(amount)} LBC to ${args[1]}.\n` +
       `https://explorer.lbry.com/tx/${txid}`);
