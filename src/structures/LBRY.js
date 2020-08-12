@@ -3,7 +3,11 @@ const AbortController = require('abort-controller');
 const config = require('config');
 
 class LBRY {
-  static _request(options = {}) {
+  constructor(client) {
+    this.client = client;
+  }
+
+  _request(options = {}) {
     if (!options.url)
       throw new Error('No URL was provided!');
 
@@ -61,7 +65,7 @@ class LBRY {
     });
   }
 
-  static _sdkRequest(method, params = {}) {
+  _sdkRequest(method, params = {}) {
     const payload = { method };
     if (params && Object.keys(params).length)
       payload.params = params;
@@ -78,7 +82,7 @@ class LBRY {
   /**
    * List details of all of the accounts or a specific account.
    */
-  static listAccounts(params) {
+  listAccounts(params) {
     return this._sdkRequest('account_list', params);
   }
 
@@ -86,7 +90,7 @@ class LBRY {
    * Create a new account.
    * @param {string} accountName The account's name
    */
-  static createAccount(accountName) {
+  createAccount(accountName) {
     return this._sdkRequest('account_create', { account_name: accountName, single_key: true });
   }
 
@@ -94,7 +98,7 @@ class LBRY {
    * Return the balance of an account
    * @param {string} accountID The account's ID
    */
-  static accountBalance(accountID) {
+  accountBalance(accountID) {
     return this._sdkRequest('account_balance', { account_id: accountID });
   }
 
@@ -106,7 +110,7 @@ class LBRY {
    * @param {boolean} options.everything Transfer everything
    * @param {string} options.amount The amount to fund (integer/float string)
    */
-  static fundAccount({ to, from, everything, amount }) {
+  fundAccount({ to, from, everything, amount }) {
     return this._sdkRequest('account_fund', { to_account: to, from_account: from, everything, amount });
   }
 
@@ -114,7 +118,7 @@ class LBRY {
    * Remove an existing account.
    * @param {string} accountID The account's ID
    */
-  static removeAccount(accountID) {
+  removeAccount(accountID) {
     return this._sdkRequest('account_remove', { account_id: accountID });
   }
   // #endregion
@@ -126,7 +130,7 @@ class LBRY {
    * @param {string} options.accountID The account ID to list
    * @param {string|Array<string>} options.claimID The clain ID to list
    */
-  static listSupports({ accountID, claimID }) {
+  listSupports({ accountID, claimID }) {
     return this._sdkRequest('support_list', { account_id: accountID, claim_id: claimID });
   }
 
@@ -137,7 +141,7 @@ class LBRY {
    * @param {string} options.claimID The claim ID to use
    * @param {number} options.amount The amount of support
    */
-  static createSupport({ accountID, claimID, amount }) {
+  createSupport({ accountID, claimID, amount }) {
     return this._sdkRequest('support_create', {
       account_id: accountID, claim_id: claimID,
       amount, funding_account_ids: accountID });
@@ -149,7 +153,7 @@ class LBRY {
    * @param {string} options.accountID The account ID to use
    * @param {string} options.claimID The claim ID to use
    */
-  static abandonSupport({ accountID, claimID }) {
+  abandonSupport({ accountID, claimID }) {
     return this._sdkRequest('support_abandon', { account_id: accountID, claim_id: claimID });
   }
   // #endregion
@@ -158,7 +162,7 @@ class LBRY {
   /**
    * Return the balance of a wallet
    */
-  static walletBalance() {
+  walletBalance() {
     return this._sdkRequest('wallet_balance');
   }
 
@@ -170,14 +174,14 @@ class LBRY {
    * @param {string} options.to The wallet address to fund
    * @param {string} options.amount The amount to send
    */
-  static sendToWallet({ amount, to }) {
+  sendToWallet({ amount, to }) {
     return this._sdkRequest('wallet_send', { amount, addresses: to });
   }
 
   /**
    * List account addresses or details of single address.
    */
-  static listAddresses() {
+  listAddresses() {
     return this._sdkRequest('address_list', { page_size: 1 });
   }
 
@@ -190,7 +194,7 @@ class LBRY {
    * @param {string} options.channel Signed channel name (e.g: @Coolguy3289)
    * @param {string} options.channelType The type of claim
    */
-  static searchClaim({ name, text, claimID, channel, channelType }) {
+  searchClaim({ name, text, claimID, channel, channelType }) {
     return this._sdkRequest('claim_search', {
       name, text, claim_id: claimID, channel, channel_type: channelType });
   }
