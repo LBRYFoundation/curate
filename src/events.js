@@ -20,11 +20,11 @@ module.exports = class Events {
     if (this.client.messageAwaiter.processHalt(message)) return;
 
     // Command parsing
-    const argInterpretor = new ArgumentInterpreter(Util.Prefix.strip(message, this.client, [config.prefix]));
+    const argInterpretor = new ArgumentInterpreter(Util.Prefix.strip(message, this.client));
     const args = argInterpretor.parseAsStrings();
     const commandName = args.splice(0, 1)[0];
     const command = this.client.cmds.get(commandName, message);
-    if (!message.content.match(Util.Prefix.regex(this.client, [config.prefix])) || !command) return;
+    if (!message.content.match(Util.Prefix.regex(this.client)) || !command) return;
 
     try {
       await command._exec(message, {

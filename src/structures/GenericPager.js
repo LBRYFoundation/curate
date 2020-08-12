@@ -1,5 +1,6 @@
 const Paginator = require('./Paginator');
 const lodash = require('lodash');
+const config = require('config');
 
 /**
  * A generic pager that shows a list of items
@@ -62,7 +63,7 @@ class GenericPager extends Paginator {
         description: this.header || undefined,
         footer: this.footer ? { text: this.footer } : undefined,
         fields: []
-      }, this.embedExtra, { color: this.client.config.embedColor });
+      }, this.embedExtra, { color: config.embedColor });
 
       embed.fields.push({
         name: '*List Prompt*',

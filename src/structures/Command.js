@@ -17,7 +17,7 @@ class Command {
    * @private
    */
   _preload() {
-    if (!this.preload() && this.client.config.debug)
+    if (!this.preload() && config.debug)
       this.client.cmds.logger.info('Preloading command', this.name);
   }
 

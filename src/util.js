@@ -104,7 +104,7 @@ Util.Random = {
 Util.Prefix = {
   regex(client, prefixes = null) {
     if (!prefixes)
-      prefixes = [client.config.prefix];
+      prefixes = [config.prefix];
     return new RegExp(`^((?:<@!?${client.user.id}>|${
       prefixes.map(prefix => Util.Escape.regex(prefix)).join('|')})\\s?)(\\n|.)`, 'i');
   },
@@ -149,7 +149,7 @@ Util.CommandPermissions = {
   emoji: (client, message) => message.channel.type === 1 ||
     message.channel.permissionsOf(client.user.id).has('externalEmojis'),
   guild: (_, message) => !!message.guildID,
-  elevated: (client, message) => client.config.elevated.includes(message.author.id),
+  elevated: (_, message) => config.elevated.includes(message.author.id),
   curator: (client, message) => {
     const member = message.guildID ? message.member :
       client.guilds.get(config.guildID).members.get(message.author.id);
