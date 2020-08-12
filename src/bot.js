@@ -31,7 +31,6 @@ class CurateBot extends Eris.Client {
       ]
     });
     this.logger.setGlobal();
-    this.config = config;
     this.typingIntervals = new Map();
 
     // Events
@@ -79,18 +78,18 @@ class CurateBot extends Eris.Client {
   async start() {
     // Redis
     this.db = new Database(this);
-    await this.db.connect(this.config.redis);
+    await this.db.connect(config.redis);
 
     // Discord
     await this.connect();
     await this.waitTill('ready');
     this.editStatus('online', {
-      name: `${this.config.prefix}help`,
+      name: `${config.prefix}help`,
       type: 3,
     });
 
     // Commands
-    this.cmds = new CommandLoader(this, path.join(this.dir, this.config.commandsPath));
+    this.cmds = new CommandLoader(this, path.join(this.dir, config.commandsPath));
     this.cmds.reload();
     this.cmds.preloadAll();
 

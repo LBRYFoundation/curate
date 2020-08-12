@@ -2,7 +2,7 @@ module.exports = {
   // [string] The token for the bot
   token: "",
   // [string] The prefix for the bot
-  prefix: "L!",
+  prefix: "!",
   // [Array<string>] An array of elevated IDs, giving them access to developer commands
   elevated: [],
   // [string] The path where the commands will be found
@@ -15,6 +15,8 @@ module.exports = {
   curatorRoleID: "",
   // [string] admin_role_id
   adminRoleID: "",
+  // [string] guild_id
+  guildID: "",
   // [string] sdk_url
   sdkURL: "",
   // [Object] Eris client options (https://abal.moe/Eris/docs/Client)
@@ -30,11 +32,17 @@ module.exports = {
     intents: [
       "guilds",
       "guildEmojis",
-      "guildWebhooks",
       "guildMessages",
       "guildMessageReactions",
       "directMessages",
       "directMessageReactions"
-    ] // 13865 - Intent Raw.
+    ]
+  },
+  // [Object] Redis config
+  redis: {
+    host: "localhost",
+    port: 6379,
+    password: "",
+    prefix: "lbrycurate:"
   }
 }

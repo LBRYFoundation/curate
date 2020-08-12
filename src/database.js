@@ -16,10 +16,10 @@ module.exports = class Database extends EventEmitter {
    * Creates a client and connects to the database
    * @param {Object} options
    */
-  connect({ host = 'localhost', port, password }) {
+  connect({ host = 'localhost', port, password, prefix }) {
     console.info('Connecting to redis...');
     return new Promise((resolve, reject) => {
-      this.redis = redis.createClient({ host, port, password });
+      this.redis = redis.createClient({ host, port, password, prefix });
       this.redis.on('error', this.onError.bind(this));
       this.redis.on('warning', w => console.warn('Redis Warning', w));
       this.redis.on('end', () => this.onClose.bind(this));
@@ -35,16 +35,10 @@ module.exports = class Database extends EventEmitter {
     });
   }
 
-  /**
-   * @private
-   * @param {string} k Key
-   */
-  _p(k) { return (this.client.config.prefix || '') + k; }
-
   // #region Redis functions
   hget(key, hashkey) {
     return new Promise((resolve, reject) => {
-      this.redis.HGET(this._p(key), hashkey, (err, value) => {
+      this.redis.HGET(key, hashkey, (err, value) => {
         if (err) reject(err);
         resolve(value);
       });
@@ -53,7 +47,7 @@ module.exports = class Database extends EventEmitter {
 
   hset(key, hashkey, value) {
     return new Promise((resolve, reject) => {
-      this.redis.HSET(this._p(key), hashkey, value, (err, res) => {
+      this.redis.HSET(key, hashkey, value, (err, res) => {
         if (err) reject(err);
         resolve(res);
       });
@@ -62,7 +56,7 @@ module.exports = class Database extends EventEmitter {
 
   incr(key) {
     return new Promise((resolve, reject) => {
-      this.redis.incr(this._p(key), (err, res) => {
+      this.redis.incr(key, (err, res) => {
         if (err) reject(err);
         resolve(res);
       });
@@ -71,7 +65,7 @@ module.exports = class Database extends EventEmitter {
 
   get(key) {
     return new Promise((resolve, reject) => {
-      this.redis.get(this._p(key), function(err, reply) {
+      this.redis.get(key, function(err, reply) {
         if (err) reject(err);
         resolve(reply);
       });
@@ -80,7 +74,7 @@ module.exports = class Database extends EventEmitter {
 
   expire(key, ttl) {
     return new Promise((resolve, reject) => {
-      this.redis.expire(this._p(key), ttl, (err, value) => {
+      this.redis.expire(key, ttl, (err, value) => {
         if (err) reject(err);
         resolve(value);
       });
@@ -90,7 +84,7 @@ module.exports = class Database extends EventEmitter {
 
   exists(key) {
     return new Promise((resolve, reject) => {
-      this.redis.exists(this._p(key), (err, value) => {
+      this.redis.exists(key, (err, value) => {
         if (err) reject(err);
         resolve(value === 1);
       });
@@ -99,7 +93,7 @@ module.exports = class Database extends EventEmitter {
 
   set(key, value) {
     return new Promise((resolve, reject) => {
-      this.redis.set(this._p(key), value, (err, res) => {
+      this.redis.set(key, value, (err, res) => {
         if (err) reject(err);
         resolve(res);
       });

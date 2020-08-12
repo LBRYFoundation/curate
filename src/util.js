@@ -151,26 +151,26 @@ Util.CommandPermissions = {
   guild: (_, message) => !!message.guildID,
   elevated: (client, message) => client.config.elevated.includes(message.author.id),
   curator: (client, message) => {
-    if (!message.guildID) return false;
-    // Server owner or elevated users
-    if (message.channel.guild.ownerID == message.author.id ||
-      Util.CommandPermissions.elevated(client, message)) return true;
-    return message.member.roles.includes(config.curatorRoleID);
+    const member = message.guildID ? message.member :
+      client.guilds.get(config.guildID).members.get(message.author.id);
+    if (!member) return false;
+    if (Util.CommandPermissions.elevated(client, message)) return true;
+    return member.roles.includes(config.curatorRoleID);
   },
   admin: (client, message) => {
-    if (!message.guildID) return false;
-    // Server owner or elevated users
-    if (message.channel.guild.ownerID == message.author.id ||
-      Util.CommandPermissions.elevated(client, message)) return true;
-    return message.member.roles.includes(config.adminRoleID);
+    const member = message.guildID ? message.member :
+      client.guilds.get(config.guildID).members.get(message.author.id);
+    if (!member) return false;
+    if (Util.CommandPermissions.elevated(client, message)) return true;
+    return member.roles.includes(config.adminRoleID);
   },
   curatorOrAdmin: (client, message) => {
-    if (!message.guildID) return false;
-    // Server owner or elevated users
-    if (message.channel.guild.ownerID == message.author.id ||
-      Util.CommandPermissions.elevated(client, message)) return true;
-    return message.member.roles.includes(config.curatorRoleID) ||
-      message.member.roles.includes(config.adminRoleID);
+    const member = message.guildID ? message.member :
+      client.guilds.get(config.guildID).members.get(message.author.id);
+    if (!member) return false;
+    if (Util.CommandPermissions.elevated(client, message)) return true;
+    return member.roles.includes(config.curatorRoleID) ||
+      member.roles.includes(config.adminRoleID);
   },
 };
 
