@@ -14,71 +14,6 @@ const Util = module.exports = {};
 Util.keyValueForEach = (obj, func) => Object.keys(obj).map(key => func(key, obj[key]));
 
 /**
- * @memberof Util.
- * @deprecated
- */
-Util.sliceKeys = (obj, f) => {
-  const newObject = {};
-  Util.keyValueForEach(obj, (k, v) => {
-    if (f(k, v)) newObject[k] = v;
-  });
-  return newObject;
-};
-
-/**
- * Converts a number into a 00:00:00 format
- * @memberof Util.
- */
-Util.toHHMMSS = string => {
-  const sec_num = parseInt(string, 10);
-  let hours = Math.floor(sec_num / 3600);
-  let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-  let seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-  if (hours < 10) {hours = '0' + hours;}
-  if (minutes < 10) {minutes = '0' + minutes;}
-  if (seconds < 10) {seconds = '0' + seconds;}
-  const time = hours + ':' + minutes + ':' + seconds;
-  return time;
-};
-
-/**
- * @memberof Util.
- * @deprecated
- */
-Util.formatNumber = num => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-
-/**
- * Flattens a JSON object
- * @memberof Util.
- * @see https://stackoverflow.com/a/19101235/6467130
- */
-Util.flattenObject = (data) => {
-  const result = {};
-  function recurse (cur, prop) {
-    if (Object(cur) !== cur) {
-      result[prop] = cur;
-    } else if (Array.isArray(cur)) {
-      const l = cur.length;
-      for (let i = 0; i < l; i++)
-        recurse(cur[i], prop + '[' + i + ']');
-      if (l == 0)
-        result[prop] = [];
-    } else {
-      let isEmpty = true;
-      for (const p in cur) {
-        isEmpty = false;
-        recurse(cur[p], prop ? prop + '.' + p : p);
-      }
-      if (isEmpty && prop)
-        result[prop] = {};
-    }
-  }
-  recurse(data, '');
-  return result;
-};
-
-/**
  * Randomness generator
  * @memberof Util.
  */
@@ -106,34 +41,14 @@ Util.Prefix = {
     if (!prefixes)
       prefixes = [config.prefix];
     return new RegExp(`^((?:<@!?${client.user.id}>|${
-      prefixes.map(prefix => Util.Escape.regex(prefix)).join('|')})\\s?)(\\n|.)`, 'i');
+      prefixes.map(prefix => Util.Prefix.escapeRegex(prefix)).join('|')})\\s?)(\\n|.)`, 'i');
   },
   strip(message, client, prefixes) {
     return message.content.replace(
       Util.Prefix.regex(client, prefixes), '$2').replace(/\s\s+/g, ' ').trim();
   },
-};
-
-/**
- * Commonly used regex patterns
- * @memberof Util.
- * @deprecated
- */
-Util.Regex = {
-  escape: /[-/\\^$*+?.()|[\]{}]/g,
-  url: /https?:\/\/(-\.)?([^\s/?.#-]+\.?)+(\/[^\s]*)?/gi,
-  userMention: /<@!?(\d+)>/gi,
-  webhookURL:
-    /(?:https?:\/\/)(?:canary\.|ptb\.|)discord(?:app)?\.com\/api\/webhooks\/(\d{17,18})\/([\w-]{68})/
-};
-  
-/**
- * Discord.JS's method of escaping characters
- * @memberof Util.
- */
-Util.Escape = {
-  regex(s) {
-    return s.replace(Util.Regex.escape, '\\$&');
+  escapeRegex(s) {
+    return s.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
   }
 };
 
@@ -254,5 +169,44 @@ Util.Hastebin = {
         key: hasteInfo.key
       };
     }
+  }
+};
+
+/**
+ * LBRY-related utility
+ * @memberof Util.
+ */
+Util.LBRY = {
+  async findOrCreateAccount(client, discordID) {
+    // Check SQLite
+    const pair = await client.sqlite.get(discordID);
+    if (pair)
+      return { accountID: pair.lbryID };
+
+    // Check accounts via SDK
+    const response = await client.lbry.listAccounts({ page_size: Util.LBRY.getAccountCount(client) });
+    const accounts = await response.json();
+    const foundAccount = accounts.result.items.find(account => account.name === discordID);
+    if (foundAccount)
+      return { accountID: foundAccount.id };
+
+    // Create account if not found
+    const newAccount = await Util.LBRY.createAccount(client, discordID);
+    return {
+      accountID: newAccount.result.id,
+      newAccount: true
+    };
+  },
+  async getAccountCount(client) {
+    const response = await client.lbry.listAccounts({ page_size: 1 }).then(r => r.json());
+    return response.result.total_items;
+  },
+  async createAccount(client, discordID) {
+    console.info('Creating account for user', discordID);
+    const account = await client.lbry.createAccount(discordID).then(r => r.json());
+    await client.sqlite.pair(discordID, account.result.id);
+    console.info('Created pair', discordID, account.result.id);
+    await client.lbry.fundAccount({ to: account.result.id, amount: config.startingBalance });
+    return account;
   }
 };

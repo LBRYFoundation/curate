@@ -19,6 +19,8 @@ module.exports = {
   guildID: "",
   // [string] sdk_url
   sdkURL: "",
+  // [string] Amount to auto-fund upon account creation
+  startingBalance: "",
   // [Object] Eris client options (https://abal.moe/Eris/docs/Client)
   discordConfig: {
     autoreconnect: true,
