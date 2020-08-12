@@ -1,4 +1,5 @@
 const Command = require('../../structures/Command');
+const Util = require('../../util');
 
 module.exports = class Withdraw extends Command {
   get name() { return 'withdraw'; }
@@ -10,8 +11,8 @@ module.exports = class Withdraw extends Command {
   }; }
 
   async exec(message, { args }) {
-    const amount = args[0];
-    if (isNaN(parseFloat(amount)))
+    const amount = Util.LBRY.ensureDecimal(args[0]);
+    if (!amount)
       return message.channel.createMessage('The first argument must be a numeric amount of LBC to send!');
 
     // Check if the balance is more than requested

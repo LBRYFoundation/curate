@@ -208,5 +208,10 @@ Util.LBRY = {
     console.info('Created pair', discordID, account.result.id);
     await client.lbry.fundAccount({ to: account.result.id, amount: config.startingBalance });
     return account;
+  },
+  ensureDecimal(str) {
+    const num = parseFloat(str);
+    if (isNaN(num)) return null;
+    return Number.isInteger(num) ? `${num}.0` : num.toString();
   }
 };
