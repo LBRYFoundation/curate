@@ -87,7 +87,8 @@ class Command {
       const error = response.status === 500 ?
         { message: 'Internal server error' } : json.error;
       console.error(`SDK error in ${this.name}:${message.author.id}`, response, error);
-      await message.channel.createMessage(`LBRY-SDK returned ${response.status}.\n${error.message}`);
+      await message.channel.createMessage(
+        `LBRY-SDK returned ${response.status} witn an error: \`${error.message}\``);
       return true;
     }
     return false;
