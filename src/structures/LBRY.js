@@ -147,7 +147,7 @@ class LBRY {
   createSupport({ accountID, claimID, amount }) {
     return this._sdkRequest('support_create', {
       account_id: accountID, claim_id: claimID,
-      amount: Util.LBRY.ensureDecimal(amount), funding_account_ids: accountID });
+      amount: Util.LBRY.ensureDecimal(amount), funding_account_ids: [accountID] });
   }
 
   /**
