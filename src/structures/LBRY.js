@@ -113,7 +113,8 @@ class LBRY {
    */
   fundAccount({ to, from, everything, amount }) {
     return this._sdkRequest('account_fund', {
-      to_account: to, from_account: from, everything, amount: Util.LBRY.ensureDecimal(amount) });
+      to_account: to, from_account: from, everything,
+      amount: Util.LBRY.ensureDecimal(amount), broadcast: true });
   }
 
   /**
