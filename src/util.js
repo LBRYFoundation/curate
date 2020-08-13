@@ -228,7 +228,9 @@ Util.LBRY = {
     const account = await client.lbry.createAccount(discordID).then(r => r.json());
     await client.sqlite.pair(discordID, account.result.id);
     console.info('Created pair', discordID, account.result.id);
-    await client.lbry.fundAccount({ to: account.result.id, amount: config.startingBalance });
+    const response = await client.lbry.fundAccount({ to: account.result.id, amount: config.startingBalance });
+    const transaction = await response.json();
+    console.info('Funded account', account.result.id, transaction.result.txid);
     return account;
   },
   ensureDecimal(str) {
