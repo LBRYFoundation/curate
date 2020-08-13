@@ -210,7 +210,8 @@ Util.LBRY = {
     if (create) {
       const newAccount = await Util.LBRY.createAccount(client, discordID);
       return {
-        accountID: newAccount.result.id,
+        accountID: newAccount.account.result.id,
+        txID: newAccount.transaction.result.txid,
         newAccount: true
       };
     } else return { accountID: null };
@@ -231,7 +232,7 @@ Util.LBRY = {
     const response = await client.lbry.fundAccount({ to: account.result.id, amount: config.startingBalance });
     const transaction = await response.json();
     console.info('Funded account', account.result.id, transaction.result.txid);
-    return account;
+    return { account, transaction };
   },
   ensureDecimal(str) {
     const num = parseFloat(str);
