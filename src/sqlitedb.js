@@ -44,4 +44,12 @@ module.exports = class SQLiteDB {
   pair(discordID, lbryID) {
     return this.model.create({ discordID, lbryID });
   }
+
+  /**
+   * Removes an ID pair
+   * @param {string} discordID 
+   */
+  remove(discordID) {
+    return this.client.sqlite.model.destroy({ where: { discordID } });
+  }
 };

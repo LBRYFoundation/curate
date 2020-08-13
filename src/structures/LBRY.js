@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const AbortController = require('abort-controller');
 const config = require('config');
+const Util = require('../util');
 
 class LBRY {
   constructor(client) {
@@ -111,7 +112,8 @@ class LBRY {
    * @param {string} options.amount The amount to fund (integer/float string)
    */
   fundAccount({ to, from, everything, amount }) {
-    return this._sdkRequest('account_fund', { to_account: to, from_account: from, everything, amount });
+    return this._sdkRequest('account_fund', {
+      to_account: to, from_account: from, everything, amount: Util.LBRY.ensureDecimal(amount) });
   }
 
   /**
@@ -175,7 +177,7 @@ class LBRY {
    * @param {string} options.amount The amount to send
    */
   sendToWallet({ amount, to }) {
-    return this._sdkRequest('wallet_send', { amount, addresses: to });
+    return this._sdkRequest('wallet_send', { amount: Util.LBRY.ensureDecimal(amount), addresses: to });
   }
 
   /**
