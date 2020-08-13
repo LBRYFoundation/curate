@@ -50,6 +50,6 @@ module.exports = class SQLiteDB {
    * @param {string} discordID 
    */
   remove(discordID) {
-    return this.client.sqlite.model.destroy({ where: { discordID } });
+    return this.model.destroy({ where: { discordID } });
   }
 };
