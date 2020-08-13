@@ -146,6 +146,16 @@ Util.resolveToUserID = (arg) => {
 };
 
 /**
+ * Make a promise that resolves after some time
+ * @memberof Util.
+ * @param {string} arg
+ * @returns {?string}
+ */
+Util.halt = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+/**
  * Hastebin-related functions
  * @memberof Util.
  */
