@@ -17,7 +17,9 @@ module.exports = class Balance extends Command {
     return message.channel.createMessage({ embed: {
       description: `You have **${wallet.result.available}** LBC available.\n\n` +
         `Reserved in Supports: ${wallet.result.reserved_subtotals.supports} LBC\n` +
-        `Total: ${wallet.result.total} LBC`
+        `Total: ${wallet.result.total} LBC` +
+        (account.newAccount ? '\n\n:warning: This account was just created. ' + 
+          'Please wait a few seconds, and run the command again to get an accurate balance.' : '')
     } });
   }
 
