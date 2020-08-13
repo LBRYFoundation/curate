@@ -37,7 +37,7 @@ module.exports = class Support extends Command {
  
     // Create support
     const response = await this.client.lbry.createSupport({
-      accountID: account, claimID: givenClaim, amount: givenAmount });
+      accountID: account.accountID, claimID: givenClaim, amount: givenAmount });
     const transaction = await response.json();
     if (await this.handleResponse(message, response, transaction)) return;
     const txid = transaction.result.txid;
