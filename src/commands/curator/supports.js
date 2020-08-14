@@ -9,7 +9,7 @@ module.exports = class Supports extends Command {
     minimumArgs: 0
   }; }
   async exec(message, { args }) {
-    if(args.count = 2) {
+    if(args.count === 2) {
         const givenClaim = args[0];
         if (!/^[a-f0-9]{40}$/.test(givenClaim))
             // @TODO use claim_search for invalid claim ids
@@ -18,7 +18,7 @@ module.exports = class Supports extends Command {
         if (!discordID)
           message.channel.createMessage('That Discord user isn\'t valid.');
         const account = await Util.LBRY.findOrCreateAccount(this.client, discordID, false);
-    } else if (args.count = 1) {
+    } else if (args.count === 1) {
         const discordID = Util.resolveToUserID(args[0]);
         if (!discordID)
           message.channel.createMessage('That Discord user isn\'t valid.');
@@ -34,16 +34,19 @@ module.exports = class Supports extends Command {
         const supports = (await supportsResponse.json()).result.items;
         for (let i = 0, len = supports.length; i < len; i++) {
           const support = supports[i];
-          message.channel.createMessage(`ClaimID: \`${support.claim_id}\`\nClaim Name: \`${support.name}\`\nClaim URL: \`${support.permanent_url}\`\nSupport Ammount: \`${support.amount}\`\n`);
+          message.channel.createMessage(`ClaimID: \`${support.claim_id}\`\nClaim Name: \`${support.name}\`\n
+            Claim URL: \`${support.permanent_url}\`\nSupport Ammount: \`${support.amount}\`\n`);
         } 
     }else {
       const supportsResponse = await client.lbry.listSupports({
           accountID: account.accountID, page_size: supportsCount, claim_id: givenClaim });
-      console.debug(`Displaying supports for ${account.accountID} and claimID ${givenClaim}, (${supportsCount})`);
+      console.debug(
+          `Displaying supports for ${account.accountID} and claimID ${givenClaim}, (${supportsCount})`);
       const supports = (await supportsResponse.json()).result.items;
       for (let i = 0, len = supports.length; i < len; i++) {
         const support = supports[i];
-        message.channel.createMessage(`ClaimID: \`${support.claim_id}\`\nClaim Name: \`${support.name}\`\nClaim URL: \`${support.permanent_url}\`\nSupport Ammount: \`${support.amount}\`\n`);
+        message.channel.createMessage(`ClaimID: \`${support.claim_id}\`\nClaim Name: \`${support.name}\`\n
+          Claim URL: \`${support.permanent_url}\`\nSupport Ammount: \`${support.amount}\`\n`);
       }
      }
   }
