@@ -18,7 +18,7 @@ module.exports = class DeleteAccount extends Command {
     if (account.accountID) {
       const supportsCount = await Util.LBRY.getSupportsCount(this.client, account.accountID);
       if (!await this.client.messageAwaiter.confirm(message, {
-        header: `Are you sure you delete that account? *(${supportsCount.toLocaleString()} support[s])*`
+        header: `Are you sure you want to delete that account? *(${supportsCount.toLocaleString()} support[s])*`
       })) return;
       await Util.LBRY.deleteAccount(this.client, discordID, account.accountID);
       return message.channel.createMessage('Deleted account.');
