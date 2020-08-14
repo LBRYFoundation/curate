@@ -28,8 +28,7 @@ module.exports = class AbaondonAll extends Command {
         `Are you sure you want to abandon all supports from that account? *(${
           supportsCount.toLocaleString()} support[s])*`
     })) return;
-    const response = await Util.LBRY.abandonAllClaims(this.client, account.accountID);
-    if (await this.handleResponse(message, response)) return;
+    await Util.LBRY.abandonAllClaims(this.client, account.accountID);
     return message.channel.createMessage('Abandoned all claims.');
   }
 
