@@ -23,7 +23,7 @@ module.exports = class FundAccount extends Command {
     })) return;
     const response = await this.client.lbry.fundAccount({to: account.accountID, amount: givenAmount});
     const transaction = await response.json();
-    console.info('Funded account', account.result.id, transaction.result.txid);
+    console.info('Funded account', account.accountID, transaction.result.txid);
     const txid = transaction.result.txid;
     return message.channel.createMessage(`Successfully funded account! https://explorer.lbry.com/tx/${txid}`);
   }
