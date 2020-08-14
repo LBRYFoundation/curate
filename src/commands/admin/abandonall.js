@@ -9,7 +9,8 @@ module.exports = class AbaondonAll extends Command {
     permissions: ['Admin'],
     minimumArgs: 0
   }; }
-//@TODO: Refactor this command for all abandons.
+
+  // @TODO: Refactor this command for all abandons.
   async exec(message, { args }) {
     const givenClaim = args[0];
     if (!/^[a-f0-9]{40}$/.test(givenClaim))

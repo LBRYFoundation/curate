@@ -13,12 +13,13 @@ module.exports = class DeleteAccount extends Command {
   async exec(message, { args }) {
     const discordID = Util.resolveToUserID(args[0]);
     if (!discordID)
-      message.channel.createMessage('That Discord user isn\'t valid.');
+      return message.channel.createMessage('That Discord user isn\'t valid.');
     const account = await Util.LBRY.findOrCreateAccount(this.client, discordID, false);
     if (account.accountID) {
       const supportsCount = await Util.LBRY.getSupportsCount(this.client, account.accountID);
       if (!await this.client.messageAwaiter.confirm(message, {
-        header: `Are you sure you want to delete that account? *(${supportsCount.toLocaleString()} support[s])*`
+        header:
+          `Are you sure you want to delete that account? *(${supportsCount.toLocaleString()} support[s])*`
       })) return;
       await Util.LBRY.deleteAccount(this.client, discordID, account.accountID);
       return message.channel.createMessage('Deleted account.');

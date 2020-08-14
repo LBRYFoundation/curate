@@ -22,9 +22,10 @@ module.exports = class Abaondon extends Command {
       await message.channel.sendTyping();
       await Util.halt(3000);
     }
-    // Create support
+
+    // Drop support
     const response = await this.client.lbry.abandonSupport({
-      accountID: account.accountID, claimID: givenClaim});
+      accountID: account.accountID, claimID: givenClaim });
     const transaction = await response.json();
     if (await this.handleResponse(message, response, transaction)) return;
     const txid = transaction.result.txid;
