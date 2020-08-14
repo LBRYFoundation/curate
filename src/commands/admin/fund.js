@@ -19,7 +19,7 @@ module.exports = class Fund extends Command {
     if (!discordID)
       return message.channel.createMessage('That Discord user isn\'t valid.');
 
-    const account = await Util.LBRY.findOrCreateAccount(this.client, discordID, true);
+    const account = await Util.LBRY.findOrCreateAccount(this.client, discordID);
     if (!await this.client.messageAwaiter.confirm(message, {
       header: `Are you sure you want to fund this account? *(${givenAmount} LBC)*`
     })) return;

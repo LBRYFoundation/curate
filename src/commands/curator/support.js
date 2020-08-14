@@ -41,7 +41,7 @@ module.exports = class Support extends Command {
     const transaction = await response.json();
     if (await this.handleResponse(message, response, transaction)) return;
     const txid = transaction.result.txid;
-    message.channel.createMessage(`Support successful! https://explorer.lbry.com/tx/${txid}`);
+    return message.channel.createMessage(`Support successful! https://explorer.lbry.com/tx/${txid}`);
   }
 
   get metadata() { return {

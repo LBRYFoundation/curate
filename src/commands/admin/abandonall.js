@@ -10,26 +10,27 @@ module.exports = class AbaondonAll extends Command {
     minimumArgs: 0
   }; }
 
-  // @TODO: Refactor this command for all abandons.
+  // @TODO: Refactor this command to be able to abandon all supports on the bot.
   async exec(message, { args }) {
-    const givenClaim = args[0];
-    if (!/^[a-f0-9]{40}$/.test(givenClaim))
-      // @TODO use claim_search for invalid claim ids
-      return message.channel.createMessage('That Claim ID isn\'t valid.');
-  
-    const account = await Util.LBRY.findOrCreateAccount(this.client, message.author.id);
-    if (account.newAccount) {
-      // Wait for the blockchain to complete the funding
-      await message.channel.sendTyping();
-      await Util.halt(3000);
-    }
-    // Create support
-    const response = await this.client.lbry.abandonSupport({
-      accountID: account.accountID, claimID: givenClaim});
-    const transaction = await response.json();
-    if (await this.handleResponse(message, response, transaction)) return;
-    const txid = transaction.result.txid;
-    message.channel.createMessage(`Abandon successful! https://explorer.lbry.com/tx/${txid}`);
+    const discordID = Util.resolveToUserID(args[0]);
+    if (!discordID)
+      return message.channel.createMessage('That Discord user isn\'t valid.');
+    const account = await Util.LBRY.findOrCreateAccount(this.client, discordID, false);
+    if (!account.accountID)
+      return message.channel.createMessage('That user does not have an account.');
+
+    const supportsCount = await Util.LBRY.getSupportsCount(this.client, account.accountID);
+    if (supportsCount <= 0)
+      return message.channel.createMessage('That user does not have any supports.');
+
+    if (!await this.client.messageAwaiter.confirm(message, {
+      header:
+        `Are you sure you want to abandon all supports from that account? *(${
+          supportsCount.toLocaleString()} support[s])*`
+    })) return;
+    const response = await Util.LBRY.abandonAllClaims(this.client, account.accountID);
+    if (await this.handleResponse(message, response)) return;
+    return message.channel.createMessage('Abandoned all claims.');
   }
 
   get metadata() { return {

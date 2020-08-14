@@ -17,11 +17,6 @@ module.exports = class Abaondon extends Command {
       return message.channel.createMessage('That Claim ID isn\'t valid.');
   
     const account = await Util.LBRY.findOrCreateAccount(this.client, message.author.id);
-    if (account.newAccount) {
-      // Wait for the blockchain to complete the funding
-      await message.channel.sendTyping();
-      await Util.halt(3000);
-    }
 
     // Drop support
     const response = await this.client.lbry.abandonSupport({
@@ -29,7 +24,7 @@ module.exports = class Abaondon extends Command {
     const transaction = await response.json();
     if (await this.handleResponse(message, response, transaction)) return;
     const txid = transaction.result.txid;
-    message.channel.createMessage(`Abandon successful! https://explorer.lbry.com/tx/${txid}`);
+    return message.channel.createMessage(`Abandon successful! https://explorer.lbry.com/tx/${txid}`);
   }
 
   get metadata() { return {
