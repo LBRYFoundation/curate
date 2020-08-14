@@ -6,7 +6,7 @@ module.exports = class AbaondonAll extends Command {
 
   get _options() { return {
     aliases: ['abanall', 'dropall'],
-    permissions: ['Admin'],
+    permissions: ['admin'],
     minimumArgs: 0
   }; }
 
