@@ -10,7 +10,7 @@ module.exports = {
   // [boolean] Whether debug logs will be shown
   debug: false,
   // [number] The main embed color (#ffffff -> 0xffffff)
-  embedColor: 0x429bce,
+  embedColor: 0x15521c,
   // [string] curator_role_id
   curatorRoleID: "",
   // [string] admin_role_id

@@ -1,5 +1,6 @@
 const Command = require('../../structures/Command');
 const Util = require('../../util');
+const config = require('config');
 
 module.exports = class Balance extends Command {
   get name() { return 'balance'; }
@@ -15,6 +16,7 @@ module.exports = class Balance extends Command {
     const wallet = await response.json();
     if (await this.handleResponse(message, response, wallet)) return;
     return message.channel.createMessage({ embed: {
+      color: config.embedColor,
       description: `You have **${wallet.result.available}** LBC available.\n\n` +
         `Reserved in Supports: ${wallet.result.reserved_subtotals.supports} LBC\n` +
         `Total: ${wallet.result.total} LBC` +

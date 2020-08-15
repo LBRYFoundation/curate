@@ -47,7 +47,7 @@ module.exports = class Supports extends Command {
     const paginator = new GenericPager(this.client, message, {
       items: supports,
       header: `All supports for <@${discordID || message.author.id}>${givenClaim ? ` on claim \`${givenClaim}\`` : ''}`, itemTitle: 'Supports',
-      display: item => `*lbry://*[${item.name}]()#\`${item.claim_id}\` (${item.amount} LBC)`
+      display: item => `*lbry://**${item.name}***#\`${item.claim_id}\` (${item.amount} LBC)`
     });
     return paginator.start(message.channel.id, message.author.id);
   }
