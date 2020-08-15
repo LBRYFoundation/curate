@@ -38,7 +38,7 @@ module.exports = class AbaondonAll extends Command {
       })) return;
       await this.client.startTyping(message.channel);
       const pairs = await this.client.sqlite.getAll();
-      const count = 0;
+      let count = 0;
       for (let i = 0, len = pairs.length; i < len; i++) {
         const pair = pairs[i];
         const result = await Util.LBRY.abandonAllClaims(this.client, pair.lbryID);
