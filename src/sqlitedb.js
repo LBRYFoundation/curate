@@ -52,4 +52,12 @@ module.exports = class SQLiteDB {
   remove(discordID) {
     return this.model.destroy({ where: { discordID } });
   }
+
+  /**
+   * Gets all pairs in the database
+   */
+  async getAll() {
+    const items = await this.model.findAll();
+    return items.map(item => item.get({ plain: true }));
+  }
 };

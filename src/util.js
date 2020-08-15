@@ -149,7 +149,7 @@ Util.resolveToUserID = (arg) => {
  * Make a promise that resolves after some time
  * @memberof Util.
  * @param {string} arg
- * @returns {Promise}
+ * @returns {?string}
  */
 Util.halt = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -201,12 +201,6 @@ Util.Hastebin = {
  * @memberof Util.
  */
 Util.LBRY = {
-  /**
-   * Find or create a user's account
-   * @param {Client} client 
-   * @param {string} discordID 
-   * @param {boolean} [create=true] Whether or not to create the account
-   */
   async findOrCreateAccount(client, discordID, create = true) {
     // Check SQLite
     const pair = await client.sqlite.get(discordID);
@@ -232,28 +226,14 @@ Util.LBRY = {
       };
     } else return { accountID: null };
   },
-  /**
-   * Gets the amount of accounts on the SDK
-   * @param {Client} client 
-   */
   async getAccountCount(client) {
     const response = await client.lbry.listAccounts({ page_size: 1 }).then(r => r.json());
     return response.result.total_items;
   },
-  /**
-   * Gets the amount of supports from an account
-   * @param {Client} client 
-   * @param {string} accountID
-   */
   async getSupportsCount(client, accountID) {
     const response = await client.lbry.listSupports({ accountID, page_size: 1 }).then(r => r.json());
     return response.result.total_items;
   },
-  /**
-   * Creates an account
-   * @param {Client} client 
-   * @param {string} discordID 
-   */
   async createAccount(client, discordID) {
     console.info('Creating account for user', discordID);
     const account = await client.lbry.createAccount(discordID).then(r => r.json());
@@ -264,21 +244,11 @@ Util.LBRY = {
     console.info('Funded account', account.result.id, transaction.result.txid);
     return { account, transaction };
   },
-  /**
-   * Ensures a decimal can be used by the SDK
-   * @param {string} str 
-   */
   ensureDecimal(str) {
     const num = parseFloat(str);
     if (isNaN(num)) return null;
     return Number.isInteger(num) ? `${num}.0` : num.toString();
   },
-  /**
-   * Deletes an account
-   * @param {Client} client 
-   * @param {string} discordID 
-   * @param {string} lbryID 
-   */
   async deleteAccount(client, discordID, lbryID) {
     // Abandon supports
     await Util.LBRY.abandonAllClaims(client, lbryID);
@@ -293,11 +263,6 @@ Util.LBRY = {
     await client.lbry.removeAccount(lbryID);
     await client.sqlite.remove(discordID);
   },
-  /**
-   * Abandons all claims from an account
-   * @param {Client} client 
-   * @param {string} lbryID 
-   */
   async abandonAllClaims(client, lbryID) {
     if (!lbryID)
       throw new Error('lbryID must be defined!');
@@ -310,5 +275,6 @@ Util.LBRY = {
       const support = supports[i];
       await client.lbry.abandonSupport({ claimID: support.claim_id, accountID: lbryID });
     }
+    return { count: supports.length };
   }
 };
