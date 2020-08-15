@@ -42,11 +42,13 @@ module.exports = class Supports extends Command {
     const supportsResponse = await this.client.lbry.listSupports({
       accountID: account.accountID, page_size: supportsCount, claimID: givenClaim });
     console.debug(
-      `Displaying supports for ${account.accountID}${givenClaim ? ` and claimID ${givenClaim}` : ''}, (${supportsCount})`);
+      `Displaying supports for ${
+        account.accountID}${givenClaim ? ` and claimID ${givenClaim}` : ''}, (${supportsCount})`);
     const supports = (await supportsResponse.json()).result.items;
     const paginator = new GenericPager(this.client, message, {
       items: supports,
-      header: `All supports for <@${discordID || message.author.id}>${givenClaim ? ` on claim \`${givenClaim}\`` : ''}`, itemTitle: 'Supports',
+      header: `All supports for <@${discordID || message.author.id}>${
+        givenClaim ? ` on claim \`${givenClaim}\`` : ''}`, itemTitle: 'Supports',
       display: item => `*lbry://**${item.name}***#\`${item.claim_id}\` (${item.amount} LBC)`
     });
     return paginator.start(message.channel.id, message.author.id);
