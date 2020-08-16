@@ -11,9 +11,9 @@ module.exports = {
   debug: false,
   // [number] The main embed color (#ffffff -> 0xffffff)
   embedColor: 0x15521c,
-  // [string] curator_role_id
+  // [string|Array<string>] The role ID(s) for curator roles
   curatorRoleID: "",
-  // [string] admin_role_id
+  // [string|Array<string>]] The role ID(s) for admin roles
   adminRoleID: "",
   // [string] guild_id
   guildID: "",

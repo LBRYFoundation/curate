@@ -68,24 +68,29 @@ Util.CommandPermissions = {
   curator: (client, message) => {
     const member = message.guildID ? message.member :
       client.guilds.get(config.guildID).members.get(message.author.id);
+    const roles = Array.isArray(config.curatorRoleID) ? config.curatorRoleID : [config.curatorRoleID];
     if (!member) return false;
     if (Util.CommandPermissions.elevated(client, message)) return true;
-    return member.roles.includes(config.curatorRoleID);
+    return roles.map(r => member.roles.includes(r)).includes(true);
   },
   admin: (client, message) => {
     const member = message.guildID ? message.member :
       client.guilds.get(config.guildID).members.get(message.author.id);
+    const roles = Array.isArray(config.adminRoleID) ? config.adminRoleID : [config.adminRoleID];
     if (!member) return false;
     if (Util.CommandPermissions.elevated(client, message)) return true;
-    return member.roles.includes(config.adminRoleID);
+    return roles.map(r => member.roles.includes(r)).includes(true);
   },
   curatorOrAdmin: (client, message) => {
     const member = message.guildID ? message.member :
       client.guilds.get(config.guildID).members.get(message.author.id);
+    const roles = [
+      ...(Array.isArray(config.adminRoleID) ? config.adminRoleID : [config.adminRoleID]),
+      ...(Array.isArray(config.curatorRoleID) ? config.curatorRoleID : [config.curatorRoleID]),
+    ];
     if (!member) return false;
     if (Util.CommandPermissions.elevated(client, message)) return true;
-    return member.roles.includes(config.curatorRoleID) ||
-      member.roles.includes(config.adminRoleID);
+    return roles.map(r => member.roles.includes(r)).includes(true);
   },
 };
 
