@@ -50,7 +50,7 @@ module.exports = class AbaondonAll extends Command {
   }
 
   get metadata() { return {
-    category: 'Curator',
+    category: 'Admin',
     description: 'Abandons all supports of the bot or of a given account.',
     usage: '[id|@mention]'
   }; }
