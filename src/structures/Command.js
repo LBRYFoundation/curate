@@ -54,12 +54,12 @@ class Command {
             emoji: 'I need the permission `Use External Emojis` to use this command!',
             elevated: 'Only the elevated users of the bot can use this command!',
             curator: `This command requires you to have the "${
-              message.guild.roles.get(config.curatorRoleID).name}" role!`,
+              this.client.guilds.get(config.guildID).roles.get(config.curatorRoleID).name}" role!`,
             admin: `This command requires you to have the "${
-              message.guild.roles.get(config.adminRoleID).name}" role!`,
+              this.client.guilds.get(config.guildID).roles.get(config.adminRoleID).name}" role!`,
             curatorOrAdmin: `This command requires you to have the "${
-              message.guild.roles.get(config.curatorRoleID).name}" or "${
-              message.guild.roles.get(config.adminRoleID).name}" roles!`,
+              this.client.guilds.get(config.guildID).roles.get(config.curatorRoleID).name}" or "${
+              this.client.guilds.get(config.guildID).roles.get(config.adminRoleID).name}" roles!`,
             guild: 'This command must be ran in a guild!',
           }[perm]);
       }
