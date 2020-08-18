@@ -42,6 +42,8 @@ class Command {
             ` \`${this.metadata.usage}\`` : ''}`);
 
     // Check commmand permissions
+    const curators = Array.isArray(config.curatorRoleID) ? config.curatorRoleID : [config.curatorRoleID];
+    const admins = Array.isArray(config.adminRoleID) ? config.adminRoleID : [config.adminRoleID];
     if (this.options.permissions.length)
       for (const i in this.options.permissions) {
         const perm = this.options.permissions[i];
@@ -53,13 +55,17 @@ class Command {
             embed: 'I need the permission `Embed Links` to use this command!',
             emoji: 'I need the permission `Use External Emojis` to use this command!',
             elevated: 'Only the elevated users of the bot can use this command!',
-            curator: `This command requires you to have the "${
-              this.client.guilds.get(config.guildID).roles.get(config.curatorRoleID).name}" role!`,
-            admin: `This command requires you to have the "${
-              this.client.guilds.get(config.guildID).roles.get(config.adminRoleID).name}" role!`,
-            curatorOrAdmin: `This command requires you to have the "${
-              this.client.guilds.get(config.guildID).roles.get(config.curatorRoleID).name}" or "${
-              this.client.guilds.get(config.guildID).roles.get(config.adminRoleID).name}" roles!`,
+            curator: `This command requires you to have the ${
+              curators.map(id =>
+                `"${this.client.guilds.get(config.guildID).roles.get(id).name}"`).join('/')} role!`,
+            admin: `This command requires you to have the ${
+              admins.map(id =>
+                `"${this.client.guilds.get(config.guildID).roles.get(id).name}"`).join('/')} role!`,
+            curatorOrAdmin: `This command requires you to have the ${
+              curators.map(id =>
+                `"${this.client.guilds.get(config.guildID).roles.get(id).name}"`).join('/')} or ${
+              admins.map(id =>
+                `"${this.client.guilds.get(config.guildID).roles.get(id).name}"`).join('/')} role!`,
             guild: 'This command must be ran in a guild!',
           }[perm]);
       }
