@@ -15,8 +15,8 @@ module.exports = class Support extends Command {
     if (!givenAmount)
       return message.channel.createMessage('The second argument must be a numeric amount of LBC to send!');
 
-    const givenClaim = args[0];
-    if (!/^[a-f0-9]{40}$/.test(givenClaim))
+    const givenClaim = Util.resolveToClaimID(args[0]);
+    if (!givenClaim)
       // @TODO use claim_search for invalid claim ids
       return message.channel.createMessage('That Claim ID isn\'t valid.');
   

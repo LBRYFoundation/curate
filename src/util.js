@@ -151,6 +151,20 @@ Util.resolveToUserID = (arg) => {
 };
 
 /**
+ * Resolve argument to a claim ID
+ * @memberof Util.
+ * @param {string} arg
+ * @returns {?string}
+ */
+Util.resolveToClaimID = (arg) => {
+  if (/^[a-f0-9]{40}$/.test(arg))
+    return arg;
+  else if (/^lbry:\/\/@?[\w-]+#([a-f0-9]{40})$/.test(arg))
+    return arg.replace(/^<@!?(\d{17,18})>$/, '$1');
+  else return null;
+};
+
+/**
  * Make a promise that resolves after some time
  * @memberof Util.
  * @param {string} arg

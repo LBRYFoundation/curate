@@ -11,8 +11,8 @@ module.exports = class Abaondon extends Command {
   }; }
 
   async exec(message, { args }) {
-    const givenClaim = args[0];
-    if (!/^[a-f0-9]{40}$/.test(givenClaim))
+    const givenClaim = Util.resolveToClaimID(args[0]);
+    if (!givenClaim)
       // @TODO use claim_search for invalid claim ids
       return message.channel.createMessage('That Claim ID isn\'t valid.');
   
