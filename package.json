@@ -1,6 +1,6 @@
 {
   "name": "lbry-curate",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "Support the LBRY Community through Discord!",
   "main": "src/bot.js",
   "scripts": {
