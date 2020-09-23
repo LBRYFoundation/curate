@@ -160,7 +160,7 @@ Util.resolveToClaimID = (arg) => {
   if (/^[a-f0-9]{40}$/.test(arg))
     return arg;
   else if (/^lbry:\/\/@?[\w-]+#([a-f0-9]{40})$/.test(arg))
-    return arg.replace(/^<@!?(\d{17,18})>$/, '$1');
+    return arg.replace(/^lbry:\/\/@?[\w-]+#([a-f0-9]{40})$/, '$1');
   else return null;
 };
 
