@@ -23,7 +23,7 @@
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
-    "eslint": "^7.9.0"
+    "eslint": "^7.11.0"
   },
   "repository": {
     "type": "git",
