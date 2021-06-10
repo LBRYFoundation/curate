@@ -227,7 +227,7 @@ Util.LBRY = {
     const accounts = await response.json();
 
     let syncedAccounts = 0;
-    for (const account of accounts.results.items) {
+    for (const account of accounts.result.items) {
       if (/\d{17,19}/.test(account.name)) {
         if (await client.sqlite.get(account.name)) continue;
         await client.sqlite.pair(account.name, account.id);
