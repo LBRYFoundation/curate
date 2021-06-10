@@ -279,7 +279,8 @@ Util.LBRY = {
       Util.LBRY.backupWallet();
     } catch (err) {
       console.error('Error occurred while backing up wallet file!');
-      console.error(err);      
+      console.error(err);
+      throw err;
     }
 
     // Abandon supports
@@ -315,7 +316,7 @@ Util.LBRY = {
     return { count: supports.length };
   },
   backupWallet() {
-    const wallet = fs.readFileSync(path.join(__dirname, config.walletPath));
+    const wallet = fs.readFileSync(config.walletPath);
     const d = new Date();
     const date = [
       d.getUTCFullYear(),
@@ -329,7 +330,7 @@ Util.LBRY = {
       d.getUTCMilliseconds().toString()
     ].join('-');
     const backupName = 'default_wallet.' + date + '_' + time + '.bak';
-    const backupPath = path.join(__dirname, config.walletBackupFolder, backupName);
+    const backupPath = path.join(config.walletBackupFolder, backupName);
     fs.writeFileSync(backupPath, wallet);
     console.log(`Backed up wallet file: ${backupPath}`); 
   }

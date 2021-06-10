@@ -21,8 +21,15 @@ module.exports = class DeleteAccount extends Command {
         header:
           `Are you sure you want to delete that account? *(${supportsCount.toLocaleString()} support[s])*`
       })) return;
-      await Util.LBRY.deleteAccount(this.client, discordID, account.accountID);
-      return message.channel.createMessage('Deleted account.');
+      try {
+        await Util.LBRY.deleteAccount(this.client, discordID, account.accountID);
+        return message.channel.createMessage('Deleted account.');
+      } catch (e) {
+        return message.channel.createMessage(
+          'Failed to delete the account. An error most likely occured while backing up the wallet.' +
+          `\n\`\`\`\n${e.toString()}\`\`\``
+        );
+      }
     } else
       return message.channel.createMessage('That user does not have an account.');
   }
