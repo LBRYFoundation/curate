@@ -182,10 +182,13 @@ class LBRY {
   }
 
   /**
-   * List account addresses or details of single address.
+   * List account addresses or details.
+   * @param {object} options
+   * @param {string} options.to How many items should be per page
+   * @param {string} options.amount The amount to send
    */
-  listAddresses() {
-    return this._sdkRequest('address_list', { page_size: 1 });
+  listAddresses({ page_size = 1, account_id } = {}) {
+    return this._sdkRequest('address_list', { page_size, account_id });
   }
 
   /**

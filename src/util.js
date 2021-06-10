@@ -1,5 +1,7 @@
 const fetch = require('node-fetch');
 const config = require('config');
+const fs = require('fs');
+const path = require('path');
 
 /**
  * Represents the utilities for the bot
@@ -220,6 +222,11 @@ Util.Hastebin = {
  * @memberof Util.
  */
 Util.LBRY = {
+  async findSDKAccount(client, fn) {
+    const response = await client.lbry.listAccounts({ page_size: await Util.LBRY.getAccountCount(client) });
+    const accounts = await response.json();
+    return accounts.result.items.find(fn);
+  },
   async findOrCreateAccount(client, discordID, create = true) {
     // Check SQLite
     const pair = await client.sqlite.get(discordID);
@@ -227,9 +234,7 @@ Util.LBRY = {
       return { accountID: pair.lbryID };
 
     // Check accounts via SDK
-    const response = await client.lbry.listAccounts({ page_size: await Util.LBRY.getAccountCount(client) });
-    const accounts = await response.json();
-    const foundAccount = accounts.result.items.find(account => account.name === discordID);
+    const foundAccount = await Util.LBRY.findSDKAccount(client, account => account.name === discordID);
     if (foundAccount) {
       await client.sqlite.pair(discordID, foundAccount.id);
       return { accountID: foundAccount.id };
@@ -269,14 +274,26 @@ Util.LBRY = {
     return Number.isInteger(num) ? `${num}.0` : num.toString();
   },
   async deleteAccount(client, discordID, lbryID) {
+    // Backup the wallet before doing any delete function
+    try {
+      Util.LBRY.backupWallet();
+    } catch (err) {
+      console.error('Error occurred while backing up wallet file!');
+      console.error(err);      
+    }
+
     // Abandon supports
     await Util.LBRY.abandonAllClaims(client, lbryID);
 
     // Take out funds from account
     const balanceResponse = await client.lbry.accountBalance(lbryID);
-    const amount = (await balanceResponse.json()).result.total;
-    if (parseFloat(amount) > 0)
+    let amount = (await balanceResponse.json()).result.total;
+    while (amount >= 2) {
       await client.lbry.fundAccount({ from: lbryID, everything: true, amount });
+      const finalBalance = await client.lbry.accountBalance(lbryID);
+      amount = (await finalBalance.json()).result.total;
+      await Util.halt(3000);
+    }
 
     // Remove account from SDK & SQLite
     await client.lbry.removeAccount(lbryID);
@@ -293,7 +310,27 @@ Util.LBRY = {
     for (let i = 0, len = supports.length; i < len; i++) {
       const support = supports[i];
       await client.lbry.abandonSupport({ claimID: support.claim_id, accountID: lbryID });
+      await Util.halt(3000);
     }
     return { count: supports.length };
+  },
+  backupWallet() {
+    const wallet = fs.readFileSync(path.join(__dirname, config.walletPath));
+    const d = new Date();
+    const date = [
+      d.getUTCFullYear(),
+      d.getUTCMonth().toString().padStart(2, '0'),
+      d.getUTCDay().toString().padStart(2, '0'),
+    ].join('-');
+    const time = [
+      d.getUTCHours().toString().padStart(2, '0'),
+      d.getUTCMinutes().toString().padStart(2, '0'),
+      d.getUTCSeconds().toString().padStart(2, '0'),
+      d.getUTCMilliseconds().toString()
+    ].join('-');
+    const backupName = 'default_wallet.' + date + '_' + time + '.bak';
+    const backupPath = path.join(__dirname, config.walletBackupFolder, backupName);
+    fs.writeFileSync(backupPath, wallet);
+    console.log(`Backed up wallet file: ${backupPath}`); 
   }
 };
