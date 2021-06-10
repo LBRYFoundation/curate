@@ -9,7 +9,7 @@ module.exports = class Sync extends Command {
   }; }
 
   async exec(message) {
-    const synced = Util.LBRY.syncPairs(this.client);
+    const synced = await Util.LBRY.syncPairs(this.client);
     return message.channel.createMessage(`Synced ${synced} new pairs.`);
   }
 
