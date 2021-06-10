@@ -37,6 +37,7 @@ module.exports = class AbaondonAll extends Command {
         header: 'Are you sure you want to abandon **all supports** from **all accounts**?'
       })) return;
       await this.client.startTyping(message.channel);
+      await Util.LBRY.syncPairs();
       const pairs = await this.client.sqlite.getAll();
       let count = 0;
       for (let i = 0, len = pairs.length; i < len; i++) {

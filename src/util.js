@@ -222,6 +222,21 @@ Util.Hastebin = {
  * @memberof Util.
  */
 Util.LBRY = {
+  async syncPairs(client) {
+    const response = await client.lbry.listAccounts({ page_size: await Util.LBRY.getAccountCount(client) });
+    const accounts = await response.json();
+
+    let syncedAccounts = 0;
+    for (const account of accounts.results.items) {
+      if (/\d{17,19}/.test(account.name)) {
+        if (await client.sqlite.get(account.name)) continue;
+        await client.sqlite.pair(account.name, account.id);
+        syncedAccounts++;
+      }
+    }
+
+    return syncedAccounts;
+  },
   async findSDKAccount(client, fn) {
     const response = await client.lbry.listAccounts({ page_size: await Util.LBRY.getAccountCount(client) });
     const accounts = await response.json();

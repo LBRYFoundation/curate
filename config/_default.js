@@ -19,9 +19,9 @@ module.exports = {
   guildID: "",
   // [string] sdk_url
   sdkURL: "",
-  // [string] The path to the main wallet file to back up
+  // [string] The ABSOLUTE path to the main wallet file to back up
   walletPath: "~/.lbryum/wallets/default_wallet",
-  // [string] The folder to store wallet backups after every deletion
+  // [string] The ABSOLUTE path folder to store wallet backups after every deletion
   walletBackupFolder: "~/.lbryum_backup/",
   // [string] Amount to auto-fund upon account creation
   startingBalance: "",
