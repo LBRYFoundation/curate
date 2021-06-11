@@ -32,7 +32,7 @@ module.exports = class ListAll extends Command {
       items: pairs, itemTitle: 'Pairs', itemsPerPage: 3,
       display: pair => `> <@${pair.discordID}> - \`${pair.lbryID}\`\n` +
       `> ${pair.wallet_ok
-        ? `${pair.wallet_available} available, ${pair.wallet_reserve}`
+        ? `${pair.wallet_available} available, ${pair.wallet_reserve} staked.`
         : 'Wallet Unavailable'}\n`
     });
     return paginator.start(message.channel.id, message.author.id);
