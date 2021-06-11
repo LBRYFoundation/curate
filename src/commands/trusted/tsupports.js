@@ -30,7 +30,7 @@ module.exports = class TSupports extends Command {
       items: supports,
       header: `All supports for the trusted account${
         givenClaim ? ` on claim \`${givenClaim}\`` : ''}`, itemTitle: 'Supports', itemsPerPage: 5,
-      display: item => `> ${item.name} #\`${item.claim_id}\`\n> ${item.amount} LBC\n`
+      display: item => `> ${item.name} \`${item.claim_id}\`\n> ${item.amount} LBC\n`
     });
     return paginator.start(message.channel.id, message.author.id);
   }

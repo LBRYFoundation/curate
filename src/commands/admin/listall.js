@@ -43,6 +43,7 @@ module.exports = class ListAll extends Command {
   }
   get metadata() { return {
     category: 'Admin',
-    description: 'List all users in the database.'
+    description: 'List all users in the database.',
+    usage: '[page]'
   }; }
 };
