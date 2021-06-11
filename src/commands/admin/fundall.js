@@ -28,6 +28,7 @@ module.exports = class FundAll extends Command {
           pairs.push({ discordID: member.id, lbryID: account.accountID });
         }
       }
+      await Util.halt(5000);
       this.client.stopTyping(message.channel);
     }
 
@@ -41,6 +42,7 @@ module.exports = class FundAll extends Command {
       errored = 0;
     for (const pair of pairs) {
       const response = await this.client.lbry.fundAccount({ to: pair.lbryID, amount: givenAmount });
+      await Util.halt(2000);
       const transaction = await response.json();
       if ('code' in transaction) {
         console.info('Failed to fund account', pair.lbryID, transaction.code, transaction.message);
@@ -51,6 +53,7 @@ module.exports = class FundAll extends Command {
         resultLines.push(`${pair.discordID} - https://explorer.lbry.com/tx/${transaction.result.txid}`);
         funded++;
       }
+      await Util.halt(2000);
     }
     this.client.stopTyping(message.channel);
     return message.channel.createMessage(errored
