@@ -7,7 +7,7 @@ module.exports = class ListAll extends Command {
     permissions: ['admin'],
     minimumArgs: 0
   }; }
-  async exec(message) {
+  async exec(message, { args }) {
     const pairs = await this.client.sqlite.getAll();
     if (pairs.length <= 0)
       return message.channel.createMessage('No users found in the database.');
@@ -35,6 +35,10 @@ module.exports = class ListAll extends Command {
         ? `${pair.wallet_available} available, ${pair.wallet_reserve} staked.`
         : 'Wallet Unavailable'}\n`
     });
+
+    if (args[0])
+      paginator.toPage(args[0]);
+
     return paginator.start(message.channel.id, message.author.id);
   }
   get metadata() { return {
