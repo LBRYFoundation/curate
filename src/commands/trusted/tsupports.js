@@ -29,8 +29,8 @@ module.exports = class TSupports extends Command {
     const paginator = new GenericPager(this.client, message, {
       items: supports,
       header: `All supports for the trusted account${
-        givenClaim ? ` on claim \`${givenClaim}\`` : ''}`, itemTitle: 'Supports',
-      display: item => `*lbry://**${item.name}***#\`${item.claim_id}\` (${item.amount} LBC)`
+        givenClaim ? ` on claim \`${givenClaim}\`` : ''}`, itemTitle: 'Supports', itemsPerPage: 5,
+      display: item => `> ${item.name} #\`${item.claim_id}\`\n> ${item.amount} LBC\n`
     });
     return paginator.start(message.channel.id, message.author.id);
   }
