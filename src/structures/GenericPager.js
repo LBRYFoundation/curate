@@ -21,7 +21,7 @@ class GenericPager extends Paginator {
   constructor(client, message, {
     items = [], itemsPerPage = 15,
     display = item => item.toString(),
-    embedExtra = {}, itemTitle = 'words.item.many',
+    embedExtra = {}, itemTitle = 'Items',
     header = null, footer = null
   } = {}) {
     super(client, message, { items, itemsPerPage });

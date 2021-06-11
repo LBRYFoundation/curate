@@ -13,6 +13,8 @@ module.exports = {
   embedColor: 0x15521c,
   // [string|Array<string>] The role ID(s) for curator roles
   curatorRoleID: "",
+  // [string|Array<string>] The role ID(s) for trusted roles
+  trustedRoleID: "",
   // [string|Array<string>] The role ID(s) for admin roles
   adminRoleID: "",
   // [string] guild_id

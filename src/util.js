@@ -94,6 +94,17 @@ Util.CommandPermissions = {
     if (Util.CommandPermissions.elevated(client, message)) return true;
     return roles.map(r => member.roles.includes(r)).includes(true);
   },
+  trustedOrAdmin: (client, message) => {
+    const member = message.guildID ? message.member :
+      client.guilds.get(config.guildID).members.get(message.author.id);
+    const roles = [
+      ...(Array.isArray(config.adminRoleID) ? config.adminRoleID : [config.adminRoleID]),
+      ...(Array.isArray(config.trustedRoleID) ? config.trustedRoleID : [config.trustedRoleID]),
+    ];
+    if (!member) return false;
+    if (Util.CommandPermissions.elevated(client, message)) return true;
+    return roles.map(r => member.roles.includes(r)).includes(true);
+  },
 };
 
 /**
