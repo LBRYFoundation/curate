@@ -29,7 +29,7 @@ module.exports = class ListAll extends Command {
     }
 
     const paginator = new GenericPager(this.client, message, {
-      items: pairs, itemTitle: 'Pairs', itemsPerPage: 3,
+      items: pairs, itemTitle: 'Users', itemsPerPage: 5,
       display: pair => `> <@${pair.discordID}> - \`${pair.lbryID}\`\n` +
       `> ${pair.wallet_ok
         ? `${pair.wallet_available} available, ${pair.wallet_reserve} staked.`
