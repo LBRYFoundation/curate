@@ -44,6 +44,7 @@ class Command {
     // Check commmand permissions
     const curators = Array.isArray(config.curatorRoleID) ? config.curatorRoleID : [config.curatorRoleID];
     const admins = Array.isArray(config.adminRoleID) ? config.adminRoleID : [config.adminRoleID];
+    const trusteds = Array.isArray(config.trustedRoleID) ? config.trustedRoleID : [config.trustedRoleID];
     if (this.options.permissions.length)
       for (const i in this.options.permissions) {
         const perm = this.options.permissions[i];
@@ -63,6 +64,11 @@ class Command {
                 `"${this.client.guilds.get(config.guildID).roles.get(id).name}"`).join('/')} role!`,
             curatorOrAdmin: `This command requires you to have the ${
               curators.map(id =>
+                `"${this.client.guilds.get(config.guildID).roles.get(id).name}"`).join('/')} or ${
+              admins.map(id =>
+                `"${this.client.guilds.get(config.guildID).roles.get(id).name}"`).join('/')} role!`,
+            trustedOrAdmin: `This command requires you to have the ${
+              trusteds.map(id =>
                 `"${this.client.guilds.get(config.guildID).roles.get(id).name}"`).join('/')} or ${
               admins.map(id =>
                 `"${this.client.guilds.get(config.guildID).roles.get(id).name}"`).join('/')} role!`,
