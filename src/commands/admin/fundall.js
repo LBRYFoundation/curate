@@ -21,7 +21,7 @@ module.exports = class FundAll extends Command {
       await this.client.startTyping(message.channel);
       const curatorRoles = Array.isArray(config.curatorRoleID)
         ? config.curatorRoleID : [config.curatorRoleID];
-      const members = this.client.guilds.get(config.guildID).fetchMembers();
+      const members = await this.client.guilds.get(config.guildID).fetchMembers();
       for (const member of members) {
         if (curatorRoles.map(r => member.roles.includes(r)).includes(true)) {
           const account = await Util.LBRY.findOrCreateAccount(this.client, member.id);
