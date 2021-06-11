@@ -10,7 +10,7 @@ module.exports = class ListAll extends Command {
   async exec(message) {
     const pairs = await this.client.sqlite.getAll();
     if (pairs <= 0)
-      return message.channel.createMessage('No pairs found in the database.');
+      return message.channel.createMessage('No users found in the database.');
 
     for (const pair of pairs) {
       const response = await this.client.lbry.accountBalance(pair.lbryID);
