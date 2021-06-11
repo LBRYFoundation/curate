@@ -35,18 +35,27 @@ module.exports = class FundAll extends Command {
       header: `Are you sure you want to fund **all** accounts? *(${givenAmount} LBC)*`
     })) return;
 
-    // ID - TXID
-
     await this.client.startTyping(message.channel);
     const resultLines = [];
+    let funded = 0,
+      errored = 0;
     for (const pair of pairs) {
       const response = await this.client.lbry.fundAccount({ to: pair.lbryID, amount: givenAmount });
       const transaction = await response.json();
-      console.info('Funded account', pair.lbryID, transaction.result.txid);
-      resultLines.push(`${pair.discordID} - https://explorer.lbry.com/tx/${transaction.result.txid}`);
+      if ('code' in transaction) {
+        console.info('Failed to fund account', pair.lbryID, transaction.code, transaction.message);
+        resultLines.push(`${pair.discordID} ! ${transaction.code} - ${transaction.message}`);
+        errored++;
+      } else {
+        console.info('Funded account', pair.lbryID, transaction.result.txid);
+        resultLines.push(`${pair.discordID} - https://explorer.lbry.com/tx/${transaction.result.txid}`);
+        funded++;
+      }
     }
     this.client.stopTyping(message.channel);
-    return message.channel.createMessage(`Successfully funded ${resultLines.length} account(s)!`, {
+    return message.channel.createMessage(errored
+      ? `Failed to fund ${errored} accounts! (${funded} funded)`
+      : `Successfully funded ${funded} account(s)!`, {
       name: 'result.txt',
       file: Buffer.from(resultLines.join('\n'), 'utf8')
     });
