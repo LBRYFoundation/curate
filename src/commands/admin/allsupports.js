@@ -8,7 +8,7 @@ module.exports = class AllSupports extends Command {
   get _options() { return {
     aliases: ['asups', 'allsups'],
     permissions: ['admin'],
-    minimumArgs: 1
+    minimumArgs: 0
   }; }
 
   async exec(message, { args }) {
