@@ -9,7 +9,7 @@ module.exports = class ListAll extends Command {
   }; }
   async exec(message) {
     const pairs = await this.client.sqlite.getAll();
-    if (pairs <= 0)
+    if (pairs.length <= 0)
       return message.channel.createMessage('No users found in the database.');
 
     for (const pair of pairs) {
