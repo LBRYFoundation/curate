@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "abort-controller": "^3.0.0",
-    "cat-loggr": "^1.1.0",
+    "cat-loggr": "^1.2.2",
     "config": "^3.3.6",
     "eris": "^0.15.1",
     "eventemitter3": "^4.0.7",
