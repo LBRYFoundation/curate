@@ -1,4 +1,4 @@
-name: ESLint
+name: Lint
 on:
   push:
     paths:
@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Run ESLint
-        run: yarn run eslint:fix
+        run: yarn run lint:fix
       - name: Commit changes
         uses: EndBug/add-and-commit@v4
         with:
