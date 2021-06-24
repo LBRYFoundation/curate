@@ -1,6 +1,7 @@
 import { oneLine } from 'common-tags';
 import { ClientEvent, CommandContext, DexareCommand, PermissionNames } from 'dexare';
 import LBRYModule from '../modules/lbry';
+import LBRYXModule from '../modules/lbryx';
 import WalletModule from '../modules/wallet';
 
 export abstract class GeneralCommand extends DexareCommand {
@@ -9,7 +10,7 @@ export abstract class GeneralCommand extends DexareCommand {
   }
 
   get lbryx() {
-    return this.client.modules.get('lbryx')! as LBRYModule<any>;
+    return this.client.modules.get('lbryx')! as LBRYXModule<any>;
   }
 
   get wallet() {

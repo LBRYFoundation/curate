@@ -301,7 +301,7 @@ export interface JSONRPCResponse<T> {
 }
 
 export interface PaginatingResult<T> {
-  items: T;
+  items: T[];
   page: number;
   page_size: number;
   total_items: number;

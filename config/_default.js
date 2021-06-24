@@ -44,10 +44,12 @@ module.exports = {
     },
 
     logger: {
+      // [string] The highest level to log from
       level: 'debug'
     },
 
     cron: {
+      // [string] The folder to load crons from
       loadFolder: './src/crons'
     },
 
@@ -58,7 +60,9 @@ module.exports = {
 
     lbryx: {
       // [string?] Amount to auto-fund upon account creation
-      startingBalance: ""
+      startingBalance: "",
+      // [string?] The file to write pairs to
+      databasePath: "data/lbry.sqlite"
     },
 
     wallet: {
