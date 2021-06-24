@@ -225,6 +225,7 @@ export default class LBRYXModule<T extends DexareClient<CurateConfig>> extends D
   }
   /* #endregion */
 
+  /* #region claim */
   /**
    * Abandon all claims from a LBRY account.
    * @param accountID The LBRY account ID to use
@@ -245,4 +246,41 @@ export default class LBRYXModule<T extends DexareClient<CurateConfig>> extends D
     }
     return { count: supports.items.length };
   }
+
+  /**
+   * Resolve a query into a claim ID.
+   * @param query The query to resolve
+   */
+  async resolveClaim(query: string) {
+    // Regular claim ID
+    if (/^[a-f0-9]{40}$/.test(query)) return query;
+
+    // Canonical URL
+    const CANONICAL_URL = /^lbry:\/\/([a-f0-9]{40})$/;
+    if (CANONICAL_URL.test(query)) return query.replace(CANONICAL_URL, '$1');
+
+    // Short URL: https://regex101.com/r/IQR6Xu/1
+    const SHORT_URL =
+      /^<?(?:https?:\/\/(?:odysee\.com|lbry\.tv)\/|lbry:\/\/)?(?<channel>@[\w-]+)[#:](?<channelID>[a-f0-9])(?:\/(?<video>[\w-]+)[#:](?<videoID>[a-f0-9]))>?$/;
+    if (SHORT_URL.test(query)) {
+      const groups = query.match(SHORT_URL)!.groups!;
+      const options: LBRY.ClaimSearchArguments = {
+        channel: groups.channel,
+        page_size: 1000
+      };
+      if (groups.video) options.text = groups.video;
+
+      const search = await this.lbry.claimSearch(options);
+      for (const claim of search.items) {
+        if (
+          (groups.video && claim.claim_id.startsWith(groups.videoID) && claim.value_type === 'stream') ||
+          (!groups.video && claim.claim_id.startsWith(groups.channelID) && claim.value_type === 'channel')
+        )
+          return claim.claim_id;
+      }
+    }
+
+    return null;
+  }
+  /* #endregion */
 }
