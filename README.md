@@ -9,7 +9,6 @@ This bot allows the community of LBRY to support eachother through the [LBRY Fou
 * Pull the repo
 * Install [Node.JS LTS](https://nodejs.org/) (Currently Node v12.x)
 * Install [Yarn](https://yarnpkg.com/) (`npm install yarn -g`)
-* Install [Redis](https://redis.io/) ([quickstart](https://redis.io/topics/quickstart))
 * Install LBRY-SDK
 * Set your NODE_ENV (Node environment) Environment Variable to Production (`EXPORT NODE_ENV=production`)
 * In the `config/` folder, copy `_default.js` to `production.js` and edit the config as needed

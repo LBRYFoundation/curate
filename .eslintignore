@@ -1,1 +1,3 @@
 config/
+src-old/
+node_modules/

@@ -2,8 +2,8 @@
 	"apps": [
 		{
 			"name": "LBRYCurate",
-			"script": "node",
-			"args": "src/bot.js"
+			"script": "yarn",
+			"args": "start:prod"
 		}
 	]
 }

@@ -1,6 +1,11 @@
 node_modules
-config/default.js
-config/production.js
-config/curate.sqlite
+config/*
+!config/_default.js
+*.sqlite
 package-lock.json
+yarn.lock
+yarn-error.log
 .idea/
+.vscode/*
+!.vscode/extensions.json
+src-old/
