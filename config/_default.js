@@ -36,6 +36,7 @@ module.exports = {
       messageLimit: 0,
       intents: [
         "guilds",
+        "guildMembers",
         "guildMessages",
         "guildMessageReactions",
         "directMessages",
