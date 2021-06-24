@@ -1,6 +1,8 @@
-import { oneLine } from 'common-tags';
+import { oneLine, stripIndents } from 'common-tags';
 import { ClientEvent, CommandContext, DexareCommand, PermissionNames } from 'dexare';
+import Eris from 'eris';
 import LBRYModule from '../modules/lbry';
+import * as LBRY from '../modules/lbry/types';
 import LBRYXModule from '../modules/lbryx';
 import WalletModule from '../modules/wallet';
 
@@ -19,6 +21,44 @@ export abstract class GeneralCommand extends DexareCommand {
 
   get embedColor(): number {
     return this.client.config.embedColor;
+  }
+
+  log(level: 'info' | 'debug', ...args: any[]) {
+    return this.client.events.emit('logger', level, 'lbrybot', args);
+  }
+
+  displayWallet(
+    wallet: LBRY.Balance,
+    title = 'Balance',
+    { newAccount = false, thumbnail = '' } = {}
+  ): Eris.MessageContent {
+    return {
+      embed: {
+        color: this.embedColor,
+        title,
+        ...(thumbnail
+          ? {
+              thumbnail: { url: thumbnail }
+            }
+          : {}),
+        description: stripIndents`
+          **Available:** ${wallet.available} LBC
+
+          Reserved in Supports: ${wallet.reserved_subtotals.supports} LBC
+          Total: ${wallet.total} LBC
+
+
+          ${
+            newAccount
+              ? stripIndents`
+                :warning: This account was just created.
+                'Please wait a few seconds, and run the command again to get an accurate balance.
+              `
+              : ''
+          }
+        `
+      }
+    };
   }
 
   hasPermission(ctx: CommandContext, event?: ClientEvent): boolean | string {

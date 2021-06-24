@@ -252,6 +252,8 @@ export default class LBRYXModule<T extends DexareClient<CurateConfig>> extends D
    * @param query The query to resolve
    */
   async resolveClaim(query: string) {
+    if (!query) return null;
+
     // Regular claim ID
     if (/^[a-f0-9]{40}$/.test(query)) return query;
 
