@@ -268,7 +268,8 @@ export default class LBRYXModule<T extends DexareClient<CurateConfig>> extends D
       const groups = query.match(SHORT_URL)!.groups!;
       const options: LBRY.ClaimSearchArguments = {
         channel: groups.channel,
-        page_size: 1000
+        page_size: 1000,
+        no_totals: false
       };
       if (groups.video) options.text = groups.video;
 
