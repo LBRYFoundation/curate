@@ -52,6 +52,7 @@ export default class SupportsCommand extends GeneralCommand {
     await paginate(
       ctx,
       {
+        title: 'Supports',
         items: supports.items.map((item) => `> ${item.name} \`${item.claim_id}\`\n> ${item.amount} LBC`),
         itemSeparator: '\n\n'
       },
