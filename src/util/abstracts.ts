@@ -76,10 +76,10 @@ export abstract class GeneralCommand extends DexareCommand {
       if (missing.length > 0) {
         if (missing.includes('dexare.elevated'))
           return `The \`${this.name}\` command can only be used by the bot developers or elevated users.`;
-        else if (missing.includes('lbry.curator') || missing.includes('lbry.curatorOrAdmin'))
+        else if (missing.includes('lbry.curator'))
           return `The \`${this.name}\` command can only be ran by LBRY curators.`;
-        else if (missing.includes('lbry.trusted') || missing.includes('lbry.trustedOrAdmin'))
-          return `The \`${this.name}\` command can only be ran by LBRY trusteds.`;
+        else if (missing.includes('lbry.trusted'))
+          return `The \`${this.name}\` command can only be ran by Trusted account users.`;
         else if (missing.includes('lbry.admin'))
           return `The \`${this.name}\` command can only be ran by LBRY admins.`;
         else if (missing.includes('dexare.nsfwchannel'))

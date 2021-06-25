@@ -9,7 +9,7 @@ export default class AbandonCommand extends GeneralCommand {
       description: 'Abandon a support on a claim.',
       category: 'Curator',
       aliases: ['aban', 'drop'],
-      userPermissions: ['lbry.curatorOrAdmin'],
+      userPermissions: ['lbry.curator'],
       metadata: {
         examples: ['abandon @channel#a/video#b'],
         usage: '<claim>'

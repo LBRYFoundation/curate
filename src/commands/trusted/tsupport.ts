@@ -10,7 +10,7 @@ export default class TSupportCommand extends GeneralCommand {
       description: 'Support a claim from the trusted account.',
       category: 'Trusted',
       aliases: ['tsup'],
-      userPermissions: ['lbry.trustedOrAdmin'],
+      userPermissions: ['lbry.trusted'],
       metadata: {
         examples: ['tsupport @channel#a/video#b 2.0'],
         usage: '<claim> <amount>'

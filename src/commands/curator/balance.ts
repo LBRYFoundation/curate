@@ -10,7 +10,7 @@ export default class BalanceCommand extends GeneralCommand {
       description: 'Shows your account balance.',
       category: 'Curator',
       aliases: ['bal'],
-      userPermissions: ['lbry.curatorOrAdmin'],
+      userPermissions: ['lbry.curator'],
       metadata: {
         examples: ['balance', 'balance @user'],
         usage: '<user>',

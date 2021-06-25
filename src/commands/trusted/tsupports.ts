@@ -9,7 +9,7 @@ export default class TSupportsCommand extends GeneralCommand {
       description: 'List supports from the trusted account.',
       category: 'Trusted',
       aliases: ['tsups'],
-      userPermissions: ['lbry.trustedOrAdmin'],
+      userPermissions: ['lbry.trusted'],
       metadata: {
         examples: ['tsupports @channel#a/video#b'],
         usage: '[claim]'

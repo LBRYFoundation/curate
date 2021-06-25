@@ -10,7 +10,7 @@ export default class TAbandonCommand extends GeneralCommand {
       description: 'Abandon a support on a claim from the trusted account.',
       category: 'Trusted',
       aliases: ['taban', 'tdrop'],
-      userPermissions: ['lbry.trustedOrAdmin'],
+      userPermissions: ['lbry.trusted'],
       metadata: {
         examples: ['tabandon @channel#a/video#b'],
         usage: '<claim>'

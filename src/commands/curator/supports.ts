@@ -11,7 +11,7 @@ export default class SupportsCommand extends GeneralCommand {
       description: 'List supports.',
       category: 'Curator',
       aliases: ['sups'],
-      userPermissions: ['lbry.curatorOrAdmin'],
+      userPermissions: ['lbry.curator'],
       metadata: {
         examples: ['supports', 'supports @user', 'supports @user @channel#a/video#b'],
         usage: '[user] [claim]'

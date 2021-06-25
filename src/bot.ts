@@ -51,15 +51,13 @@ export function rolePermissionCheck(...roles: (string | string[])[]) {
   };
 }
 
-client.permissions.register('lbry.curator', rolePermissionCheck(client.config.curatorRoles));
-client.permissions.register('lbry.trusted', rolePermissionCheck(client.config.trustedRoles));
 client.permissions.register('lbry.admin', rolePermissionCheck(client.config.adminRoles));
 client.permissions.register(
-  'lbry.curatorOrAdmin',
+  'lbry.curator',
   rolePermissionCheck(client.config.curatorRoles, client.config.adminRoles)
 );
 client.permissions.register(
-  'lbry.trustedOrAdmin',
+  'lbry.trusted',
   rolePermissionCheck(client.config.trustedRoles, client.config.adminRoles)
 );
 /* #endregion */

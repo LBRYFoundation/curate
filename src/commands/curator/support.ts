@@ -10,7 +10,7 @@ export default class SupportCommand extends GeneralCommand {
       description: 'Support a claim.',
       category: 'Curator',
       aliases: ['sup'],
-      userPermissions: ['lbry.curatorOrAdmin'],
+      userPermissions: ['lbry.curator'],
       metadata: {
         examples: ['support @channel#a/video#b 2.0'],
         usage: '<claim> <amount>'

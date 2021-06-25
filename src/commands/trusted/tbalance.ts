@@ -8,7 +8,7 @@ export default class TBalanceCommand extends GeneralCommand {
       description: 'Shows the trusted account balance.',
       category: 'Trusted',
       aliases: ['tbal'],
-      userPermissions: ['lbry.trustedOrAdmin'],
+      userPermissions: ['lbry.trusted'],
       metadata: {
         examples: ['tbalance']
       }
