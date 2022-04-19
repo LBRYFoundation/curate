@@ -343,17 +343,10 @@ dayjs@^1.10.5:
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.5.tgz#5600df4548fc2453b3f163ebb2abbe965ccfb986"
   integrity sha512-BUFis41ikLz+65iH6LHQCDm4YPMj5r1YFLdupPIyM4SGcXMmtiLQ7U37i+hGS8urIuqe7I/ou3IS1jVc4nbN4g==
 
-debug@4, debug@^4.1.0:
+debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.2, debug@^4.3.3:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz#1319f6579357f2338d3337d2cdd4914bb5dcc865"
   integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
-  dependencies:
-    ms "2.1.2"
-
-debug@^4.1.1, debug@^4.3.2, debug@^4.3.3:
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.3.tgz#04266e0b70a98d4462e6e288e38259213332b664"
-  integrity sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==
   dependencies:
     ms "2.1.2"
 
@@ -1249,10 +1242,10 @@ sequelize-pool@^7.1.0:
   resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-7.1.0.tgz#210b391af4002762f823188fd6ecfc7413020768"
   integrity sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==
 
-sequelize@^6.18.0:
-  version "6.18.0"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.18.0.tgz#0e99e0c07ee144eb456374a56e2bd501634c3d16"
-  integrity sha512-x8TW8ovqG8ljZq0Uow1mtMq44hSKPefWEC590R9IWgF2dajEHvKJJpXo1FiRPfj6spOHWOnmOs1Xbb1JPG3Ifg==
+sequelize@^6.19.0:
+  version "6.19.0"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.19.0.tgz#bea0ac091d89cbbc94cabe0797b8c1359734e2e6"
+  integrity sha512-B3oGIdpYBERDjRDm74h7Ky67f6ZLcmBXOA7HscYObiOSo4pD7VBc9mtm44wNV7unc0uk8I1d30nbZBTQCE377A==
   dependencies:
     "@types/debug" "^4.1.7"
     "@types/validator" "^13.7.1"
