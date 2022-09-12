@@ -11,7 +11,7 @@
   "dependencies": {
     "abort-controller": "^3.0.0",
     "cat-loggr": "^1.2.2",
-    "config": "^3.3.7",
+    "config": "^3.3.8",
     "eris": "^0.17.1",
     "eventemitter3": "^4.0.7",
     "fuzzy": "^0.1.3",
