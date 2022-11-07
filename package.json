@@ -19,7 +19,7 @@
     "node-fetch": "2",
     "redis": "3",
     "require-reload": "^0.2.2",
-    "sequelize": "^6.25.3",
+    "sequelize": "^6.25.4",
     "sqlite3": "^5.1.2"
   },
   "devDependencies": {
