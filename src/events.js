@@ -14,7 +14,7 @@ module.exports = class Events {
 
     // Check to see if bot can send messages
     if (message.channel.type !== 1 &&
-      !message.channel.permissionsOf(this.client.user.id).has('sendMessages')) return;
+      !message.channel.permissionsOf(this.client.user.id).has('SEND_MESSAGES')) return;
 
     // Message awaiter
     if (this.client.messageAwaiter.processHalt(message)) return;

@@ -87,7 +87,7 @@ class Paginator extends EventEmitter {
    */
   canPaginate() {
     return this.message.channel.type === 1 ||
-      this.message.channel.permissionsOf(this.client.user.id).has('addReactions');
+      this.message.channel.permissionsOf(this.client.user.id).has('ADD_REACTIONS');
   }
 
   /**
@@ -96,7 +96,7 @@ class Paginator extends EventEmitter {
    */
   canManage() {
     return this.message.channel.type !== 1 &&
-      this.message.channel.permissionsOf(this.client.user.id).has('manageMessages');
+      this.message.channel.permissionsOf(this.client.user.id).has('MANAGE_MESSAGES');
   }
 
   /**

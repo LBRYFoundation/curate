@@ -38,7 +38,7 @@ class GenericPager extends Paginator {
    */
   canEmbed() {
     return this.message.channel.type === 1 ||
-      this.message.channel.permissionsOf(this.client.user.id).has('embedLinks');
+      this.message.channel.permissionsOf(this.client.user.id).has('EMBED_LINKS');
   }
 
   /**
