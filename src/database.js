@@ -1,4 +1,4 @@
-const redis = require('redis');
+const { default: Redis } = require('ioredis');
 const { EventEmitter } = require('eventemitter3');
 
 /**
@@ -19,7 +19,7 @@ module.exports = class Database extends EventEmitter {
   connect({ host = 'localhost', port, password, prefix }) {
     console.info('Connecting to redis...');
     return new Promise((resolve, reject) => {
-      this.redis = redis.createClient({ host, port, password, prefix });
+      this.redis = new Redis(port, host, { password, keyPrefix: prefix });
       this.redis.on('error', this.onError.bind(this));
       this.redis.on('warning', w => console.warn('Redis Warning', w));
       this.redis.on('end', () => this.onClose.bind(this));
@@ -37,67 +37,32 @@ module.exports = class Database extends EventEmitter {
 
   // #region Redis functions
   hget(key, hashkey) {
-    return new Promise((resolve, reject) => {
-      this.redis.HGET(key, hashkey, (err, value) => {
-        if (err) reject(err);
-        resolve(value);
-      });
-    });
+    return this.redis.hget(key, hashkey);
   }
 
   hset(key, hashkey, value) {
-    return new Promise((resolve, reject) => {
-      this.redis.HSET(key, hashkey, value, (err, res) => {
-        if (err) reject(err);
-        resolve(res);
-      });
-    });
+    return this.redis.hset(key, hashkey, value);
   }
 
   incr(key) {
-    return new Promise((resolve, reject) => {
-      this.redis.incr(key, (err, res) => {
-        if (err) reject(err);
-        resolve(res);
-      });
-    });
+    return this.redis.incr(key);
   }
 
   get(key) {
-    return new Promise((resolve, reject) => {
-      this.redis.get(key, function(err, reply) {
-        if (err) reject(err);
-        resolve(reply);
-      });
-    });
+    return this.redis.get(key);
   }
 
   expire(key, ttl) {
-    return new Promise((resolve, reject) => {
-      this.redis.expire(key, ttl, (err, value) => {
-        if (err) reject(err);
-        resolve(value);
-      });
-    });
+    return this.redis.expire(key, ttl);
   }
 
 
   exists(key) {
-    return new Promise((resolve, reject) => {
-      this.redis.exists(key, (err, value) => {
-        if (err) reject(err);
-        resolve(value === 1);
-      });
-    });
+    return this.redis.exists(key);
   }
 
   set(key, value) {
-    return new Promise((resolve, reject) => {
-      this.redis.set(key, value, (err, res) => {
-        if (err) reject(err);
-        resolve(res);
-      });
-    });
+    return this.redis.set(key, value);
   }
   // #endregion
 

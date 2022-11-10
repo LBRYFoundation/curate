@@ -1,4 +1,4 @@
-const Eris = require('eris');
+const Oceanic = require('oceanic.js');
 const Database = require('./database');
 const EventHandler = require('./events');
 const CommandLoader = require('./commandloader');
@@ -9,11 +9,11 @@ const CatLoggr = require('cat-loggr');
 const config = require('config');
 const LBRY = require('./structures/LBRY');
 
-class CurateBot extends Eris.Client {
+class CurateBot extends Oceanic.Client {
   constructor({ packagePath, mainDir } = {}) {
     // Initialization
     const pkg = require(packagePath || `${mainDir}/package.json`);
-    super(config.token, JSON.parse(JSON.stringify(config.discordConfig)));
+    super(JSON.parse(JSON.stringify(config.discordConfig)));
     this.dir = mainDir;
     this.pkg = pkg;
     this.logger = new CatLoggr({
@@ -103,17 +103,17 @@ class CurateBot extends Eris.Client {
   }
 
   /**
-   * KIlls the bot
+   * Kills the bot
    */
   dieGracefully() {
-    return super.disconnect();
+    return super.disconnect(false);
   }
 
   // Typing
 
   /**
    * Start typing in a channel
-   * @param {Channel} channel The channel to start typing in
+   * @param {Oceanic.TextableChannel} channel The channel to start typing in
    */
   async startTyping(channel) {
     if (this.isTyping(channel)) return;
@@ -125,7 +125,7 @@ class CurateBot extends Eris.Client {
 
   /**
    * Whether the bot is currently typing in a channel
-   * @param {Channel} channel
+   * @param {Oceanic.TextableChannel} channel
    */
   isTyping(channel) {
     return this.typingIntervals.has(channel.id);
@@ -133,7 +133,7 @@ class CurateBot extends Eris.Client {
 
   /**
    * Stops typing in a channel
-   * @param {Channel} channel
+   * @param {Oceanic.TextableChannel} channel
    */
   stopTyping(channel) {
     if (!this.isTyping(channel)) return;
