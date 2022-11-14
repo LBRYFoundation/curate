@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const config = require('config');
 const fs = require('fs');
 const path = require('path');
+const { Permissions } = require('oceanic.js');
 
 /**
  * Represents the utilities for the bot
@@ -60,11 +61,11 @@ Util.Prefix = {
  */
 Util.CommandPermissions = {
   attach: (client, message) => message.channel.type === 1 ||
-    message.channel.permissionsOf(client.user.id).has('ATTACH_FILES'),
+    message.channel.permissionsOf(client.user.id).has(Permissions.ATTACH_FILES),
   embed: (client, message) => message.channel.type === 1 ||
-    message.channel.permissionsOf(client.user.id).has('EMBED_LINKS'),
+    message.channel.permissionsOf(client.user.id).has(Permissions.EMBED_LINKS),
   emoji: (client, message) => message.channel.type === 1 ||
-    message.channel.permissionsOf(client.user.id).has('USE_EXTERNAL_EMOJIS'),
+    message.channel.permissionsOf(client.user.id).has(Permissions.USE_EXTERNAL_EMOJIS),
   guild: (_, message) => !!message.guildID,
   elevated: (_, message) => config.elevated.includes(message.author.id),
   curator: (client, message) => {

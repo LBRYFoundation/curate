@@ -1,6 +1,7 @@
 const Paginator = require('./Paginator');
 const lodash = require('lodash');
 const config = require('config');
+const { Permissions } = require('oceanic.js');
 
 /**
  * A generic pager that shows a list of items
@@ -38,7 +39,7 @@ class GenericPager extends Paginator {
    */
   canEmbed() {
     return this.message.channel.type === 1 ||
-      this.message.channel.permissionsOf(this.client.user.id).has('EMBED_LINKS');
+      this.message.channel.permissionsOf(this.client.user.id).has(Permissions.EMBED_LINKS);
   }
 
   /**
