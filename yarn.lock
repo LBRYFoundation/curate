@@ -1147,10 +1147,10 @@ object-assign@^4.1.1:
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
 
-oceanic.js@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/oceanic.js/-/oceanic.js-1.3.1.tgz#b19a3c6ac722e0d67f75c59ab6086cc83e4df60c"
-  integrity sha512-UhP9lLMaDQsUqerhMvJ4Rye3gLamXD6HWsn0h35CAj1eJ9sZacsCUoww6meU05y0YUPVIGiDNyKNZ77HA/8J5g==
+oceanic.js@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/oceanic.js/-/oceanic.js-1.3.2.tgz#30d3bdeeb2b07dbd36a576f7f1b4837e75015306"
+  integrity sha512-nLedv0gmtMTnAVJQWIePWf7nz/7fRzYpoQndiwsn8X9CGRDAYDgtmdCtUD+EylkIN5zRNg+aWm6EcriKEXCZUg==
   dependencies:
     undici "^5.12.0"
     ws "^8.11.0"
