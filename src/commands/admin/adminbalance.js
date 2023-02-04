@@ -13,12 +13,12 @@ module.exports = class AdminBalance extends Command {
     const response = await this.client.lbry.walletBalance();
     const wallet = await response.json();
     if (await this.handleResponse(message, response, wallet)) return;
-    return message.channel.createMessage({ embed: {
+    return message.channel.createMessage({ embeds: [{
       color: config.embedColor,
       description: `**Available:** ${wallet.result.available} LBC\n\n` +
         `Reserved in Supports: ${wallet.result.reserved_subtotals.supports} LBC\n` +
         `Total: ${wallet.result.total} LBC`
-    } });
+    }] });
   }
 
   get metadata() { return {

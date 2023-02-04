@@ -1,7 +1,6 @@
 const ArgumentInterpreter = require('./structures/ArgumentInterpreter');
 const Util = require('./util');
 const config = require('config');
-const { Permissions } = require('oceanic.js');
 
 module.exports = class Events {
   constructor(client) {
@@ -15,7 +14,7 @@ module.exports = class Events {
 
     // Check to see if bot can send messages
     if (message.channel.type !== 1 &&
-      !message.channel.permissionsOf(this.client.user.id).has(Permissions.SEND_MESSAGES)) return;
+      !message.channel.permissionsOf(this.client.user.id).has('sendMessages')) return;
 
     // Message awaiter
     if (this.client.messageAwaiter.processHalt(message)) return;

@@ -60,7 +60,7 @@ module.exports = class Help extends Command {
             value: command.metadata.note
           });
 
-        return message.channel.createMessage({ embed });
+        return message.channel.createMessage({ embeds: [embed] });
       }
     } else {
       // Display general help command
@@ -89,7 +89,7 @@ module.exports = class Help extends Command {
           inline: true
         });
       });
-      return message.channel.createMessage({ embed });
+      return message.channel.createMessage({ embeds: [embed] });
     }
   }
 

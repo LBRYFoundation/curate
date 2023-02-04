@@ -7,7 +7,7 @@ This bot allows the community of LBRY to support eachother through the [LBRY Fou
 
 ## Installation
 * Pull the repo
-* Install [Node.JS LTS](https://nodejs.org/) (Currently Node v12.x)
+* Install [Node.JS LTS](https://nodejs.org/) (Currently Node v18.x)
 * Install [Yarn](https://yarnpkg.com/) (`npm install yarn -g`)
 * Install [Redis](https://redis.io/) ([quickstart](https://redis.io/topics/quickstart))
 * Install LBRY-SDK
@@ -19,7 +19,7 @@ This bot allows the community of LBRY to support eachother through the [LBRY Fou
 This bot would not be possible without the following people/software:
 
 * LBRY Inc. and the LBRY SDK
-* Eris - NodeJS Library for Discord
+* Dysnomia - NodeJS Library for Discord, fork of Eris
 * LBRY Foundation
 * Snazzah - Creator of the Faux command base and developer of the bot
 * Coolguy3289 - Developer of the bot and command flow

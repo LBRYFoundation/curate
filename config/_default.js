@@ -1,4 +1,6 @@
 module.exports = {
+  // [string] The token for the bot
+  token: "",
   // [string] The prefix for the bot
   prefix: "!",
   // [Array<string>] An array of elevated IDs, giving them access to developer commands
@@ -25,30 +27,25 @@ module.exports = {
   walletBackupFolder: "~/.lbryum_backup/",
   // [string] Amount to auto-fund upon account creation
   startingBalance: "",
-  // [Object] Oceanic client options (https://docs.oceanic.ws/v1.3.0/interfaces/Types_Client.ClientOptions.html)
+  // [Object] Dysnomia client options (subset of https://abal.moe/Eris/docs/Client)
   discordConfig: {
-    // [string] The token for the bot
-    auth: "Bot <token>",
-    gateway: {
-      autoReconnect: true,
-      maxShards: "auto",
-      messageLimit: 0,
-      intents: [
-        "GUILDS",
-        "GUILD_EMOJIS_AND_STICKERS",
-        "GUILD_MESSAGES",
-        "GUILD_MESSAGE_REACTIONS",
-        "DIRECT_MESSAGES",
-        "DIRECT_MESSAGE_REACTIONS"
-      ]
-    },
-    collectionLimits: {
-      messages: 0
-    },
     allowedMentions: {
       everyone: false,
       roles: false,
       users: true
+    },
+    messageLimit: 0,
+    gateway: {
+      autoreconnect: true,
+      maxShards: "auto",
+      intents: [
+        "guilds",
+        "guildMessages",
+        "guildMessageReactions",
+        "directMessages",
+        "directMessageReactions",
+        "messageContent"
+      ]
     }
   },
   // [Object] Redis config

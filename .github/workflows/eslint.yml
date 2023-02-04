@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Install Node v16
-        uses: actions/setup-node@v1
+        uses: actions/checkout@v3
+      - name: Install Node v18
+        uses: actions/setup-node@v1v3
         with:
-          node-version: 16.x
+          node-version: 18
       - name: Install Yarn
         run: npm install -g yarn
       - name: Install dependencies
@@ -24,7 +24,7 @@ jobs:
       - name: Run ESLint
         run: yarn run eslint:fix
       - name: Commit changes
-        uses: EndBug/add-and-commit@v4
+        uses: EndBug/add-and-commit@v9
         with:
           add: src
           message: "chore(lint): Auto-fix linting errors"

@@ -4,3 +4,4 @@ config/production.js
 config/curate.sqlite
 package-lock.json
 .idea/
+yarn-error.log

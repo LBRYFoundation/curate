@@ -1,4 +1,4 @@
-const Oceanic = require('oceanic.js');
+const Dysnomia = require('@projectdysnomia/dysnomia');
 const Database = require('./database');
 const EventHandler = require('./events');
 const CommandLoader = require('./commandloader');
@@ -8,12 +8,13 @@ const path = require('path');
 const CatLoggr = require('cat-loggr');
 const config = require('config');
 const LBRY = require('./structures/LBRY');
+const clone = require('just-clone');
 
-class CurateBot extends Oceanic.Client {
+class CurateBot extends Dysnomia.Client {
   constructor({ packagePath, mainDir } = {}) {
     // Initialization
     const pkg = require(packagePath || `${mainDir}/package.json`);
-    super(JSON.parse(JSON.stringify(config.discordConfig)));
+    super(`Bot ${config.token}`, clone(config.discordConfig));
     this.dir = mainDir;
     this.pkg = pkg;
     this.logger = new CatLoggr({
@@ -23,10 +24,8 @@ class CurateBot extends Oceanic.Client {
         { name: 'error', color: CatLoggr._chalk.black.bgRed, err: true },
         { name: 'warn', color: CatLoggr._chalk.black.bgYellow, err: true },
         { name: 'init', color: CatLoggr._chalk.black.bgGreen },
-        { name: 'webserv', color: CatLoggr._chalk.black.bgBlue },
         { name: 'info', color: CatLoggr._chalk.black.bgCyan },
         { name: 'assert', color: CatLoggr._chalk.cyan.bgBlack },
-        { name: 'poster', color: CatLoggr._chalk.yellow.bgBlack },
         { name: 'debug', color: CatLoggr._chalk.magenta.bgBlack, aliases: ['log', 'dir'] },
         { name: 'limiter', color: CatLoggr._chalk.gray.bgBlack },
         { name: 'fileload', color: CatLoggr._chalk.white.bgBlack }
@@ -113,7 +112,7 @@ class CurateBot extends Oceanic.Client {
 
   /**
    * Start typing in a channel
-   * @param {Oceanic.TextableChannel} channel The channel to start typing in
+   * @param {Dysnomia.TextableChannel} channel The channel to start typing in
    */
   async startTyping(channel) {
     if (this.isTyping(channel)) return;
@@ -125,7 +124,7 @@ class CurateBot extends Oceanic.Client {
 
   /**
    * Whether the bot is currently typing in a channel
-   * @param {Oceanic.TextableChannel} channel
+   * @param {Dysnomia.TextableChannel} channel
    */
   isTyping(channel) {
     return this.typingIntervals.has(channel.id);
@@ -133,7 +132,7 @@ class CurateBot extends Oceanic.Client {
 
   /**
    * Stops typing in a channel
-   * @param {Oceanic.TextableChannel} channel
+   * @param {Dysnomia.TextableChannel} channel
    */
   stopTyping(channel) {
     if (!this.isTyping(channel)) return;

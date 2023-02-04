@@ -30,25 +30,25 @@ module.exports = class Balance extends Command {
       const response = await this.client.lbry.accountBalance(account.accountID);
       const wallet = await response.json();
       if (await this.handleResponse(message, response, wallet)) return;
-      return message.channel.createMessage({ embed: {
+      return message.channel.createMessage({ embeds: [{
         color: config.embedColor,
         description: `<@${discordID}> has **${wallet.result.available}** LBC available.\n\n` +
           `Reserved in Supports: ${wallet.result.reserved_subtotals.supports} LBC\n` +
           `Total: ${wallet.result.total} LBC`
-      } });
+      }] });
     } else {
       const account = await Util.LBRY.findOrCreateAccount(this.client, message.author.id);
       const response = await this.client.lbry.accountBalance(account.accountID);
       const wallet = await response.json();
       if (await this.handleResponse(message, response, wallet)) return;
-      return message.channel.createMessage({ embed: {
+      return message.channel.createMessage({ embeds: [{
         color: config.embedColor,
         description: `You have **${wallet.result.available}** LBC available.\n\n` +
           `Reserved in Supports: ${wallet.result.reserved_subtotals.supports} LBC\n` +
           `Total: ${wallet.result.total} LBC` +
           (account.newAccount ? '\n\n:warning: This account was just created. ' + 
             'Please wait a few seconds, and run the command again to get an accurate balance.' : '')
-      } });
+      }] });
     }
   }
 

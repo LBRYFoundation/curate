@@ -1,5 +1,4 @@
 const EventEmitter = require('eventemitter3');
-const { Permissions } = require('oceanic.js');
 
 /**
  * A class that creates a paging process for messages
@@ -88,7 +87,7 @@ class Paginator extends EventEmitter {
    */
   canPaginate() {
     return this.message.channel.type === 1 ||
-      this.message.channel.permissionsOf(this.client.user.id).has(Permissions.ADD_REACTIONS);
+      this.message.channel.permissionsOf(this.client.user.id).has('addReactions');
   }
 
   /**
@@ -97,7 +96,7 @@ class Paginator extends EventEmitter {
    */
   canManage() {
     return this.message.channel.type !== 1 &&
-      this.message.channel.permissionsOf(this.client.user.id).has(Permissions.MANAGE_MESSAGES);
+      this.message.channel.permissionsOf(this.client.user.id).has('manageMessages');
   }
 
   /**
