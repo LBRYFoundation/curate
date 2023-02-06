@@ -100,7 +100,8 @@
 
 "@projectdysnomia/dysnomia@github:projectdysnomia/dysnomia#dev":
   version "0.1.0-dev"
-  resolved "https://codeload.github.com/projectdysnomia/dysnomia/tar.gz/15ebb0c9e9a6d7ec28340e69ff71ebbcea9d5bce"
+  uid "008d5faa14f0e352fe40826f524a18d4ab04ec8c"
+  resolved "https://codeload.github.com/projectdysnomia/dysnomia/tar.gz/008d5faa14f0e352fe40826f524a18d4ab04ec8c"
   dependencies:
     ws "^8.2.3"
   optionalDependencies:
