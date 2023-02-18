@@ -9,7 +9,7 @@
     "eslint:fix": "eslint ./src --fix"
   },
   "dependencies": {
-    "@projectdysnomia/dysnomia": "github:projectdysnomia/dysnomia#dev",
+    "@projectdysnomia/dysnomia": "github:projectdysnomia/dysnomia#0df1369a822dba8851c667b22d5bac34f4e849e6",
     "abort-controller": "^3.0.0",
     "cat-loggr": "^1.2.2",
     "config": "^3.3.9",
