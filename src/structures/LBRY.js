@@ -1,4 +1,3 @@
-const AbortController = require('abort-controller');
 const config = require('config');
 const Util = require('../util');
 
