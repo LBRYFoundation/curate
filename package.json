@@ -18,7 +18,7 @@
     "just-clone": "^6.2.0",
     "moment": "^2.29.4",
     "require-reload": "^0.2.2",
-    "sequelize": "^6.34.0",
+    "sequelize": "^6.35.0",
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
